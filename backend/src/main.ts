@@ -20,7 +20,7 @@ async function bootstrap() {
   }));
 
   // run
-  app.listen(9000);
+  await app.listen(9000);
 
   console.log('Backend is listening on port 9000');
 }

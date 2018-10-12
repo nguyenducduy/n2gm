@@ -1,6 +1,6 @@
 {
   "type": "mysql",
-  "host": "localhost",
+  "host": "127.0.0.1",
   "port": 3306,
   "username": "root",
   "password": "root",
@@ -8,5 +8,12 @@
   "entities": [
     "src/**/**.model{.ts,.js}"
   ],
-  "synchronize": false
+  "synchronize": false,
+  "cache": {
+    "type": "redis",
+    "options": {
+      "host": "127.0.0.1",
+      "port": 6379
+    }
+  }
 }
