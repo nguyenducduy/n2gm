@@ -14,7 +14,7 @@ import * as fs from "fs";
 import * as mkdirp from "mkdirp";
 
 @Resolver("User")
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 export class UsersResolver {
     constructor(private readonly usersService: UsersService) {}
 
@@ -40,8 +40,8 @@ export class UsersResolver {
     }
 
     @Query("getUser")
-    @Roles("isSuperUser")
-    @Permissions("get.user")
+    // @Roles("isSuperUser")
+    // @Permissions("get.user")
     @UseInterceptors(new UserInterceptor())
     async getUser(_: any, { id }) {
         try {

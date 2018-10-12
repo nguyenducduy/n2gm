@@ -8,7 +8,14 @@ import { UserException } from "../../shared/filters/user.exception";
 export class UsersService {
     constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
-    async findAll(options: { curPage: number; perPage: number; q?: string; group?: number; sort?: string }) {
+    async findAll(options: {
+        curPage: number;
+        perPage: number;
+        q?: string;
+        group?: number;
+        sort?: string;
+        cache?: boolean
+    }) {
         try {
             let objects: [User[], number];
             let qb = this.userRepository.createQueryBuilder("user");
@@ -34,6 +41,11 @@ export class UsersService {
 
             // offset & limit
             qb = qb.skip((options.curPage - 1) * options.perPage).take(options.perPage);
+
+            // caching
+            if (options.cache) {
+                qb.cache("users_admin", 60000); // 60 sec
+            }
 
             // run query
             objects = await qb.getManyAndCount();
