@@ -8,6 +8,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigService } from '../shared/config.service';
 import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
+import { SearchModule } from './search/search.module';
 import { EventsModule } from "./events/events.module";
 
 @Module({
@@ -15,6 +16,7 @@ import { EventsModule } from "./events/events.module";
     TypeOrmModule.forRoot(),
     AuthModule,
     UsersModule,
+    SearchModule,
     EventsModule,
     GraphQLModule
   ],

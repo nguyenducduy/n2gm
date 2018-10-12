@@ -5,6 +5,7 @@ import { AuthGuard } from "../../guards/auth.guard";
 import { Roles } from "../../decorators/roles.decorator";
 import { Permissions } from "../../decorators/permissions.decorator";
 import { UsersService } from "./users.service";
+import { SearchService } from "../search/search.service";
 import { User } from "../../models";
 import { plainToClass } from "class-transformer";
 import { UserInterceptor } from "../../interceptors/user.interceptor";
@@ -16,7 +17,10 @@ import * as mkdirp from "mkdirp";
 @Resolver("User")
 // @UseGuards(AuthGuard)
 export class UsersResolver {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(
+        private readonly usersService: UsersService,
+        private readonly searchService: SearchService
+    ) {}
 
     @Query("getUsers")
     @Roles("isSuperUser")

@@ -5,18 +5,23 @@ import { UsersResolver } from "./users.resolver";
 import { User, Group } from "../../models";
 import { ConfigService } from "../../shared/config.service";
 import { GroupsService } from "./groups.service";
+import { SearchService } from '../search/search.service';
 
 @Global()
 @Module({
-    imports: [TypeOrmModule.forFeature([User, Group])],
+    imports: [
+        TypeOrmModule.forFeature([User, Group])
+    ],
     exports: [
         UsersService,
-        GroupsService
+        GroupsService,
+        SearchService
     ],
     providers: [
         UsersService,
         UsersResolver,
         GroupsService,
+        SearchService,
         { provide: ConfigService, useValue: new ConfigService() }
     ]
 })
