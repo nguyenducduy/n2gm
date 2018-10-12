@@ -1,0 +1,14 @@
+node_modules/*
+*.lock
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+src/storage/files/*
+.prod.env?

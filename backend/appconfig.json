@@ -1,0 +1,6 @@
+{
+  "prefix": "_backend_",
+  "users": {
+    "directory": "app/storage/files/users"
+  }
+}
