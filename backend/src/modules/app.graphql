@@ -1,0 +1,17 @@
+scalar JSON
+scalar Upload
+
+type PaginationMeta {
+  curPage: Int!
+  perPage: Int!
+  totalPages: Int!
+  totalResults: Int!
+}
+
+type File {
+  id: ID!
+  path: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}

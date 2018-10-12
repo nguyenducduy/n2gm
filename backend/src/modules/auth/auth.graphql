@@ -1,0 +1,8 @@
+type Query {
+  login(input: JSON!): LoggedUser!
+}
+
+type LoggedUser {
+  user: JSON!,
+  token: String!
+}

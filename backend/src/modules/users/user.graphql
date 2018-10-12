@@ -1,0 +1,28 @@
+type User {
+  id: Int!
+  email: String
+  fullName: String
+  avatar: String
+  status: JSON
+  isSuperUser: Int
+  isStaff: Int
+  dateCreated: JSON
+  dateModified: Int
+}
+
+type Users {
+  users: [User]
+  meta: PaginationMeta!
+}
+
+type Query {
+  getUsers(opts: JSON!): Users
+  getUser(id: Int!): User
+}
+
+type Mutation {
+  createUser(input: JSON!): User!
+  updateUser(id: Int!, input: JSON!): User!
+  deleteUser(id: Int!): Boolean!
+  uploadAvatar(file: Upload): File!
+}
