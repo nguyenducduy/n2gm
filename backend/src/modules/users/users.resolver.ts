@@ -8,6 +8,7 @@ import { UsersService } from "./users.service";
 import { SearchService } from "../search/search.service";
 import { User } from "../../models";
 import { plainToClass } from "class-transformer";
+import * as bodybuilder from 'bodybuilder';
 import { UserInterceptor } from "../../interceptors/user.interceptor";
 
 import * as shortid from "shortid";
@@ -88,6 +89,44 @@ export class UsersResolver {
             return await this.usersService.delete(id);
         } catch (error) {
             throw error;
+        }
+    }
+
+    @Query("searchUsers")
+    async searchUsers(_: any, { q }) {
+        try {
+            let queryBuilder = bodybuilder()
+                .query(
+                    'multi_match',
+                    'fields',
+                    [ 'u_full_name', 'u_email'],
+                    {
+                        query: q.trim(),
+                        fuzziness: 5,
+                        prefix_length: 0
+                    }
+                )
+                .size(10);
+
+            const searchResults = await this.searchService.search({
+                index: 'user',
+                body: queryBuilder.build()
+            });
+
+            if (searchResults.hits.total > 0) {
+                return {
+                    users: searchResults.hits.hits.map(res => {
+                        return {
+                            id: res._source.u_id,
+                            email: res._source.u_email,
+                            fullName: res._source.u_full_name,
+                        };
+                    })
+                };
+            }
+
+        } catch (error) {
+
         }
     }
 

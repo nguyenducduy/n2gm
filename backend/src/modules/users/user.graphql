@@ -15,9 +15,14 @@ type Users {
   meta: PaginationMeta!
 }
 
+type UserSearchResults {
+  users: [User]
+}
+
 type Query {
   getUsers(opts: JSON!): Users
   getUser(id: Int!): User
+  searchUsers(q: String!): UserSearchResults
 }
 
 type Mutation {

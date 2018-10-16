@@ -10,8 +10,8 @@ import { ConfigService } from '../../shared/config.service';
             provide: 'EsConnectionToken',
             useFactory: async () => {
                 return await new elasticsearch.Client({
-                    host: `http://elastic:elastic@127.0.0.1:9200}`
-                    // log: 'trace'
+                    host: `http://127.0.0.1:9200`,
+                    // log: process.env.NODE_ENV === 'dev' ? 'trace' : ''
                 });
             }
         },
