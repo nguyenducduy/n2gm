@@ -8,9 +8,10 @@ export default ({ app, store }) => {
     // locale: store.state.locale,
     locale: 'vi',
     fallbackLocale: 'en',
+    silentTranslationWarn: true,
     messages: {
-      en: require('~/locales/en-US.json'),
-      vi: require('~/locales/vi-VN.json')
+      'en': require('@/locales/en-US.json'),
+      'fr': require('@/locales/vi-VN.json')
     }
   })
-};
+}

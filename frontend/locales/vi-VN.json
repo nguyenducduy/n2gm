@@ -1,5 +1,40 @@
 {
   "default": {
-    "dashboard": "Thông tin chung"
+    "list": "Danh sách",
+    "add": "Thêm",
+    "import": "Import",
+    "previousPage": "Trước",
+    "nextPage": "Sau",
+    "page": "Trang",
+    "changePassword": "Đổi mật khẩu",
+    "logout": "Thoát",
+    "search": "Tìm kiếm",
+    "all": "Tất cả",
+    "filter": "Lọc",
+    "reset": "Reset",
+    "selectAction": "Chọn tác vụ",
+    "submit": "Thực thi",
+    "backToHome": "Trở về Trang chủ",
+    "forbidden": "Không có quyền truy cập",
+    "pageNotFound": "Không tìm thấy trang",
+    "noContent": "Chưa có dữ liệu",
+    "delete": "Xoá",
+    "update": "Cập nhật",
+    "download": "Tải xuống",
+    "upload": "Tải lên",
+    "downloading": "Đang tải",
+    "notify": "Thông báo",
+    "refresh": "Làm mới",
+    "cancel": "Huỷ",
+    "warning": "Cảnh báo",
+    "updateSearchEngine": "Cập nhật máy tìm kiếm",
+    "msg": {
+      "deleteConfirm": "Bạn chắc muốn xoá?",
+      "confirm": "Có",
+      "cancel": "Không",
+      "deleteSuccess": "thành công",
+      "noActionChosen": "Chưa chọn tác vụ",
+      "noItemSelected": "Chưa chọn đối tượng"
+    }
   }
 }

@@ -1,5 +1,40 @@
 {
   "default": {
-    "dashboard": "Dashboard"
+    "list": "List",
+    "add": "Add",
+    "import": "Import",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "page": "Page",
+    "changePassword": "Change password",
+    "logout": "Logout",
+    "search": "Search",
+    "all": "All",
+    "filter": "Filter",
+    "reset": "Reset",
+    "selectAction": "Select action",
+    "submit": "Submit",
+    "backToHome": "Back to Home",
+    "forbidden": "Forbidden",
+    "pageNotFound": "Page not found",
+    "noContent": "No content",
+    "delete": "Delete",
+    "update": "Update",
+    "download": "Download",
+    "upload": "Upload",
+    "downloading": "Download",
+    "notify": "Notify",
+    "refresh": "Refresh",
+    "cancel": "Cancel",
+    "warning": "Warning",
+    "updateSearchEngine": "Update Search Engine",
+    "msg": {
+      "deleteConfirm": "Are you sure to delete?",
+      "confirm": "Yes",
+      "cancel": "No",
+      "deleteSuccess": "successfully",
+      "noActionChosen": "No action chosen",
+      "noItemSelected": "No item selected"
+    }
   }
 }

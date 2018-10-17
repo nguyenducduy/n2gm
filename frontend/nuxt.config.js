@@ -56,6 +56,19 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      if (!ctx.isDev) {
+        config.devtool = false
+      }
+
+      // inject `compilerModules` to vue-loader options
+      config.module.rules.forEach(rule => {
+        if (rule.loader === 'vue-loader') {
+          rule.options.loaders = {
+            i18n: '@kazupon/vue-i18n-loader'
+          }
+        }
+      })
+    }
   }
 }
