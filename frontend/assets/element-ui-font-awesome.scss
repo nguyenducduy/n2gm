@@ -1,19 +1,13 @@
-// [class^='el-icon-fa'],
-// [class*=' el-icon-fa'] {
-//   display: inline-block;
-//   font: normal normal normal 14px/1 'Font Awesome 5 Free' !important;
-//   font-size: inherit;
-//   text-rendering: auto;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   font-weight: 900;
-// }
+[class^="el-icon-fa"], [class*=" el-icon-fa"] {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome!important;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+};
 
-// $fa-css-prefix: el-icon-fa;
-// $fa-font-path: '~/assets/fontawesome5/webfonts';
+$fa-css-prefix: el-icon-fa;
+$fa-font-path: "../node_modules/font-awesome/fonts";
 
-// @import '~/fontawesome5/scss/fontawesome';
-// @import '~/fontawesome5/scss/brands.scss';
-// @import '~/fontawesome5/scss/regular.scss';
-// @import '~/fontawesome5/scss/solid.scss';
-// @import '~/fontawesome5/scss/v4-shims.scss';
+@import '../node_modules/font-awesome/scss/font-awesome.scss';

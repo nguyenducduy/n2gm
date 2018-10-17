@@ -1,19 +1,33 @@
 <template>
   <el-container>
-    <el-header>Header</el-header>
+    <el-header>
+      <navigation></navigation>
+    </el-header>
     <el-container>
       <el-aside width="200px">Aside</el-aside>
       <el-container>
         <el-main>
           <nuxt />
         </el-main>
-        <el-footer>Footer</el-footer>
       </el-container>
     </el-container>
   </el-container>
 </template>
 
+<script lang="ts">
+import { Vue, Component } from 'nuxt-property-decorator';
+import Navigation from '@/components/admin/Navigation.vue';
+
+@Component({
+  components: {
+    Navigation
+  }
+})
+export default class DefaultLayout extends Vue {}
+</script>
+
 <style lang="scss">
+@import '../assets/_reset';
 @import '../assets/element-ui-font-awesome';
 
 body {
