@@ -11,7 +11,7 @@ export default ({ app, store }) => {
     silentTranslationWarn: true,
     messages: {
       'en': require('@/locales/en-US.json'),
-      'fr': require('@/locales/vi-VN.json')
+      'vi': require('@/locales/vi-VN.json')
     }
   })
 }

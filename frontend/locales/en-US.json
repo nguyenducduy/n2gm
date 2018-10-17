@@ -36,5 +36,10 @@
       "noActionChosen": "No action chosen",
       "noItemSelected": "No item selected"
     }
+  },
+  "pages": {
+    "login": {
+      "title": "Login"
+    }
   }
 }

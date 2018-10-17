@@ -36,5 +36,10 @@
       "noActionChosen": "Chưa chọn tác vụ",
       "noItemSelected": "Chưa chọn đối tượng"
     }
+  },
+  "pages": {
+    "login": {
+      "title": "Đăng nhập"
+    }
   }
 }
