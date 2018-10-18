@@ -53,8 +53,8 @@ import { Action } from 'vuex-class';
 
 @Component
 export default class AdminLoginPage extends Vue {
-  loading: boolean = false;
-  loginForm: any = {
+  loading = false;
+  loginForm = {
     email: null,
     password: null
   };
