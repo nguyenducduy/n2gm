@@ -81,11 +81,10 @@ export default class Pagination extends Vue {
 <style lang="scss" scoped>
 .pagination {
   display: inline-block;
-  margin-left: 20px;
   background-color: #fff;
   padding-left: 10px;
   padding-right: 10px;
-  padding-top: 4px;
+  padding-top: 6px;
   height: 50px;
 
   .text {
@@ -96,7 +95,8 @@ export default class Pagination extends Vue {
   }
 
   .el-limit-filter {
-    display: inline-block;
+    float: right;
+    margin-top: 6px;
     .el-select {
       width: 70px;
     }
