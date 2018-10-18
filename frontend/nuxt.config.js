@@ -16,22 +16,31 @@ module.exports = {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
+  router: {
+    middleware: ["check-auth"]
+  },
+
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: "#2ecc71", height: "3px" },
 
   /*
   ** Global CSS
   */
-  css: ['element-ui/lib/theme-chalk/index.css'],
+  css: [
+    'normalize.css',
+    'element-ui/lib/theme-chalk/index.css'
+  ],
 
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
     { src: '@/plugins/element-ui.ts', ssr: true },
-    { src: '@/plugins/i18n.ts', ssr: true }
+    { src: '@/plugins/i18n.ts', ssr: true },
+    { src: '@/plugins/axios.ts', ssr: true },
+    { src: "~plugins/notify.ts", ssr: false }
   ],
 
   /*
@@ -46,7 +55,11 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    baseURL: 'http://localhost:9000/graphql',
+    timeout: 30,
+    headers: {
+      "Content-Type": "application/json"
+    }
   },
 
   /*

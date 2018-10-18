@@ -38,8 +38,18 @@
     }
   },
   "pages": {
+    "breadcrumb": {
+      "admin-user": "Users",
+      "admin-dashboard": "Dashboard"
+    },
     "login": {
       "title": "Login"
+    },
+    "dashboard": {
+      "title": "Login"
+    },
+    "user": {
+      "title": "Users"
     }
   }
 }

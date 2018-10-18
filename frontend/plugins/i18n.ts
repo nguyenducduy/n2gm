@@ -5,13 +5,12 @@ Vue.use(VueI18n);
 
 export default ({ app, store }) => {
   app.i18n = new VueI18n({
-    // locale: store.state.locale,
-    locale: 'vi',
+    locale: store.state.locale,
     fallbackLocale: 'en',
     silentTranslationWarn: true,
     messages: {
-      'en': require('@/locales/en-US.json'),
-      'vi': require('@/locales/vi-VN.json')
+      'en': require('~/locales/en-US.json'),
+      'vi': require('~/locales/vi-VN.json')
     }
   })
 }

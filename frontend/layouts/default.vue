@@ -21,33 +21,34 @@ export default class DefaultLayout extends Vue {}
 
 <style lang="scss">
 @import '../assets/_reset';
+@import '../assets/transition';
 @import '../assets/element-ui-font-awesome';
 
 body {
   font-family: Arial;
-  font-size: 1em;
+  font-size: 14px;
 }
 .el-header,
 .el-footer {
-  height: 45px !important;
+  height: 46px !important;
   padding: 0;
-  background-color: #b3c0d1;
   color: #333;
-  text-align: center;
+  text-align: left;
 }
 
 .el-aside {
   background-color: #d3dce6;
   color: #333;
-  text-align: center;
+  text-align: left;
   line-height: 200px;
+  width: 220px;
 }
 
 .el-main {
-  background-color: #e9eef3;
+  background-color: #fff;
   color: #333;
-  text-align: center;
-  line-height: 160px;
+  text-align: left;
+  padding: 0;
 }
 
 body > .el-container {
@@ -65,9 +66,25 @@ body > .el-container {
 
 .container {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+
+  .topbar {
+    background-color: #ecf0f1;
+    height: 50px;
+    padding: 17px;
+  }
+
+  .breadcrumb-container {
+    [class^="el-icon-fa"], [class*=" el-icon-fa"] {
+      display: inline-block;
+      font: normal normal normal 18px/1 FontAwesome !important;
+    }
+  }
+
+  .pagination-container {
+    text-align: right;
+    height: 50px;
+    background-color: #ecf0f1;
+    margin-top: -17px;
+  }
 }
 </style>

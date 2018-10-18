@@ -38,8 +38,18 @@
     }
   },
   "pages": {
+    "breadcrumb": {
+      "admin-user": "Người dùng",
+      "admin-dashboard": "Thông tin chung"
+    },
     "login": {
       "title": "Đăng nhập"
+    },
+    "dashboard": {
+      "title": "Thông tin chung"
+    },
+    "user": {
+      "title": "Người dùng"
     }
   }
 }
