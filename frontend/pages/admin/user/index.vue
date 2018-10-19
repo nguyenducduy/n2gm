@@ -10,43 +10,39 @@
             <el-button slot="append" ><i class="el-icon-fa-search"></i></el-button>
           </el-input>
         </el-form-item>
-        <!-- <el-form-item prop="groupid" :label="$t('form.group')">
-          <el-select clearable size="small" v-model="form.groupid" :placeholder="$t('default.all')">
-            <el-option v-for="item, index in formSource.groupList" :key="item" :label="item" :value="item">
+        <el-form-item prop="groupid" :label="$t('form.group')">
+          <el-select multiple size="small" v-model="form.groups" :placeholder="$t('default.all')">
+            <el-option
+              v-for="item in formSource.groups"
+              :key="item.id" :label="item.screenName" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item prop="status" :label="$t('form.status')">
           <el-select clearable size="small" v-model="form.status" :placeholder="$t('default.all')">
-            <el-option v-for="item in formSource.statusList" :key="item.value" :label="item.label" :value="item.value">
+            <el-option
+              v-for="item in formSource.status"
+              :key="item.value" :label="item.name" :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="verifytype" :label="$t('form.verifyType')">
-          <el-select clearable size="small" v-model="form.verifytype" :placeholder="$t('default.all')">
-            <el-option v-for="item in formSource.verifyList" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" size="small" >{{ $t('default.filter') }}</el-button>
           <el-button size="small" >{{ $t('default.reset') }}</el-button>
         </el-form-item>
       </el-form>
     </el-aside>
-    
+
     <el-container>
       <el-main>
         <section class="container">
           <el-row class="topbar">
-            <el-col :md="18" class="breadcrumb-container">
+            <el-col :md="14" class="breadcrumb-container">
               <i class="el-icon-fa-users"></i>
               <breadcrumb />
-              <div class="right">
-                <add-user-form />
-              </div>
             </el-col>
-            <el-col :md="6" class="pagination-container">
+            <el-col :md="10" class="pagination-container">
+              <add-user-form class="add-btn-form"/>
               <pagination
                 :totalItems="1"
                 :currentPage="1"
@@ -75,12 +71,16 @@ import AddUserForm from '~/components/admin/user/AddUserForm.vue';
   // middleware: ['authenticated']
 })
 export default class UserIndexPage extends Vue {
+  @Action('users/get_form_source') getFormsourceAction;
   @State(state => state.users.query) query;
   @State(state => state.users.formSource) formSource;
   @Watch('$route')
   onPageChange() { this.initData() }
 
-  form = {};
+  form = {
+    keyword: '',
+    groups: []
+  };
 
   head() {
     return {
@@ -95,9 +95,16 @@ export default class UserIndexPage extends Vue {
     };
   }
 
+  mounted() {
+    this.initData();
+  }
+
   async initData() {
+    await this.getFormsourceAction();
+
     this.form = {
-      keyword: this.$route.query.keyword || ''
+      keyword: this.$route.query.keyword || '',
+      groups: this.$route.query.groups.split(',') || []
     };
   }
 }

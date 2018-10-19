@@ -27,7 +27,6 @@
     "refresh": "Refresh",
     "cancel": "Cancel",
     "warning": "Warning",
-    "updateSearchEngine": "Update Search Engine",
     "msg": {
       "deleteConfirm": "Are you sure to delete?",
       "confirm": "Yes",
@@ -42,14 +41,13 @@
       "admin-user": "Users",
       "admin-dashboard": "Dashboard"
     },
-    "login": {
-      "title": "Login"
-    },
-    "dashboard": {
-      "title": "Login"
-    },
-    "user": {
-      "title": "Users"
+    "admin": {
+      "user": {
+        "title": "Users",
+        "form": {
+          "fullName": " Full name"
+        }
+      }
     }
   }
 }

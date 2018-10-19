@@ -107,12 +107,6 @@ body > .el-container {
     background-color: #ecf0f1;
     height: 50px;
     padding: 17px;
-
-    .right {
-      margin-top: -12px;
-      float: right;
-      display: block;
-    }
   }
 
   .breadcrumb-container {
@@ -129,6 +123,14 @@ body > .el-container {
     height: 50px;
     background-color: #ecf0f1;
     margin-top: -17px;
+    .add-btn-form {
+      display: inline-block;
+      margin-right: 16px;
+
+      .el-dialog {
+        text-align: left;
+      }
+    }
   }
 }
 </style>

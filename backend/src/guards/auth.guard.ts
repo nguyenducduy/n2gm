@@ -39,7 +39,6 @@ export class AuthGuard implements CanActivate {
                     this.groupsService.getGroupByName(group.name)
                 );
             }
-            // console.log(req['user']);
 
             const hasRole = roles ? roles.filter(roleName =>
                 req['user'] &&
@@ -55,7 +54,6 @@ export class AuthGuard implements CanActivate {
                 return true;
             } else {
                 return false;
-                // throw new UserException('auth:forbidden');
             }
         } else {
             throw new UserException('request:unauthorized');

@@ -150,6 +150,13 @@ export class User extends BaseEntity {
         );
     }
 
+    public static getStatusList() {
+        return [
+            { name: 'Active', value: User.STATUS_ACTIVE },
+            { name: 'Blocked', value: User.STATUS_BLOCKED },
+        ];
+    }
+
     public getStatusName() {
         let name: string = "";
 

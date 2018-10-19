@@ -92,6 +92,17 @@ export class UsersResolver {
         }
     }
 
+    @Query("getFormsource")
+    @Roles("isSuperUser")
+    @Permissions("formsource.user")
+    async getFormsource() {
+        try {
+            return await this.usersService.formsource();
+        } catch (error) {
+            throw error;
+        }
+    }
+
     @Query("searchUsers")
     @Roles("isSuperUser", "isStaff")
     @Permissions("delete.user")
@@ -126,9 +137,8 @@ export class UsersResolver {
                     })
                 };
             }
-
         } catch (error) {
-
+            throw error;
         }
     }
 

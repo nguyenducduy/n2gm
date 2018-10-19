@@ -12,19 +12,49 @@
       <template slot="title">
         <h3><i class="el-icon-fa-user-plus"></i> {{ $t('add-user-form') }}</h3>
       </template>
-      <el-row>
-        <el-col :md="24">
-          <el-form autoComplete="on" label-position="left" :model="form" ref="addUseForm">
-             <el-form-item label="Name">
-              <el-input type="text" size="small" v-model="form.name"></el-input>
+      <el-row :gutter="30">
+        <el-form
+          autoComplete="on"
+          label-position="left"
+          :model="form"
+          ref="addUserForm">
+          <el-col :md="12">
+            <el-form-item :label="$t('pages.admin.user.form.fullName')">
+              <el-input type="text" size="small" v-model="form.fullName"></el-input>
             </el-form-item>
-           
+            <el-form-item :label="$t('pages.admin.user.form.email')">
+              <el-input type="text" size="small" v-model="form.email"></el-input>
+            </el-form-item>
+            <el-form-item :label="$t('pages.admin.user.form.password')">
+              <el-input type="password" size="small" v-model="form.password"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :md="12">
+            <el-form-item>
+              <el-switch
+                v-model="form.isSuperUser"
+                active-text="Is SuperUser"
+                active-value="1"
+                inactive-value="3">
+              </el-switch>
+            </el-form-item>
+            <el-form-item>
+              <el-switch
+                v-model="form.isStaff"
+                active-text="Is Staff"
+                active-value="1"
+                inactive-value="3">
+              </el-switch>
+            </el-form-item>
+
+          </el-col>
+          <el-col :md="24">
             <el-form-item style="margin-top: 30px">
-              <el-button type="primary" :loading="loading" @click.native.prevent="onSubmit"> Add
-              </el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
+                <el-button type="primary" :loading="loading" @click.native.prevent="onSubmit"> Add
+                </el-button>
+              </el-form-item>
+          </el-col>
+        </el-form>
       </el-row>
     </el-dialog>
   </div>

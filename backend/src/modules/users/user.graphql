@@ -19,10 +19,16 @@ type UserSearchResults {
   users: [User]
 }
 
+type Formsource {
+  groups: JSON,
+  status: JSON
+}
+
 type Query {
   getUsers(opts: JSON!): Users
   getUser(id: Int!): User
   searchUsers(q: String!): UserSearchResults
+  getFormsource: Formsource
 }
 
 type Mutation {

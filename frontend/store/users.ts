@@ -14,7 +14,10 @@ export const mutations = {
     state.totalItems = response.getUsers.meta.totalResults || 0;
     state.recordPerPage = response.getUsers.meta.perPage || 30;
     state.query.page = response.getUsers.meta.curPage || 1;
-  }
+  },
+  SET_FORM_SOURCE(state, responseData) {
+    state.formSource = responseData || null;
+  },
 };
 
 export const actions = {
@@ -75,5 +78,22 @@ export const actions = {
 
   async add({ commit }, formData) {
     console.log(formData)
+  },
+
+  async get_form_source({ commit }) {
+    const response = await this.$axios.$post("/", {
+      query: `
+        {
+          getFormsource {
+            groups,
+            status
+          }
+        }
+      `
+    });
+
+    return typeof response.errors === "undefined"
+      ? commit('SET_FORM_SOURCE', response.data.getFormsource)
+      : response.errors;
   }
 };

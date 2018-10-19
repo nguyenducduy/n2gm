@@ -129,4 +129,16 @@ export class UsersService {
             throw new UserException("user:delete:fail");
         }
     }
+
+    async formsource() {
+        try {
+            let output = {};
+            output['groups'] = await this.groupRepository.find();
+            output['status'] = User.getStatusList()
+
+            return output;
+        } catch (error) {
+            throw new UserException("user:formsource:fail");
+        }
+    }
 }
