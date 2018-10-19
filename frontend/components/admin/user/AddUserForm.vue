@@ -15,21 +15,47 @@
       <el-row :gutter="30">
         <el-form
           autoComplete="on"
-          label-position="left"
+          label-position="top"
+          size="small"
           :model="form"
+          :rules="rules"
           ref="addUserForm">
           <el-col :md="12">
             <el-form-item :label="$t('pages.admin.user.form.fullName')">
-              <el-input type="text" size="small" v-model="form.fullName"></el-input>
+              <el-input type="text" v-model="form.fullName"></el-input>
             </el-form-item>
             <el-form-item :label="$t('pages.admin.user.form.email')">
-              <el-input type="text" size="small" v-model="form.email"></el-input>
+              <el-input type="text" v-model="form.email"></el-input>
             </el-form-item>
             <el-form-item :label="$t('pages.admin.user.form.password')">
-              <el-input type="password" size="small" v-model="form.password"></el-input>
+              <el-input type="password" v-model="form.password"></el-input>
             </el-form-item>
           </el-col>
           <el-col :md="12">
+            <el-form-item :label="$t('form.group')">
+              <el-select
+                multiple
+                v-model="form.groups"
+                :placeholder="$t('default.all')"
+                style="width: 100%;">
+                <el-option
+                  v-for="item in formSource.groups"
+                  :key="item.id" :label="item.screenName" :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item :label="$t('form.status')">
+              <el-select
+                clearable
+                v-model="form.status"
+                :placeholder="$t('default.all')"
+                style="width: 100%;">
+                <el-option
+                  v-for="item in formSource.status"
+                  :key="item.value" :label="item.name" :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item>
               <el-switch
                 v-model="form.isSuperUser"
@@ -62,7 +88,7 @@
 
 <script lang="ts">
 import { Vue, Component} from 'nuxt-property-decorator';
-import { Action } from 'vuex-class';
+import { Action, State } from 'vuex-class';
 
 @Component({
   notifications: {
@@ -84,6 +110,7 @@ import { Action } from 'vuex-class';
 })
 export default class AddUserForm extends Vue {
   @Action('users/add') addAction;
+  @State(state => state.users.formSource) formSource;
 
   visible = false;
   loading = false;
@@ -95,6 +122,51 @@ export default class AddUserForm extends Vue {
 
   addSuccess: ({ message: string, timeout: number }) => void;
   addError: ({ message: string, timeout: number }) => void;
+
+  get rules() {
+    return {
+      fullName: [
+        {
+          required: true,
+          message: this.$t('msg.nameIsRequired'),
+          trigger: 'blur'
+        }
+      ],
+      email: [
+        {
+          required: true,
+          message: this.$t('msg.emailIsRequired'),
+          trigger: 'blur'
+        },
+        {
+          type: 'email',
+          message: this.$t('msg.emailInvalid'),
+          trigger: 'blur,change'
+        }
+      ],
+      password: [
+        {
+          required: true,
+          message: this.$t('msg.passwordIsRequired'),
+          trigger: 'blur'
+        }
+      ],
+      groups: [
+        {
+          required: true,
+          message: this.$t('msg.groupIsRequired'),
+          trigger: 'change'
+        }
+      ],
+      status: [
+        {
+          required: true,
+          message: this.$t('msg.statusIsRequired'),
+          trigger: 'change'
+        }
+      ]
+    };
+  }
 
   async onSubmit() {
     // this.loading = true;

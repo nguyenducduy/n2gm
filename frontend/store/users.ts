@@ -18,6 +18,9 @@ export const mutations = {
   SET_FORM_SOURCE(state, responseData) {
     state.formSource = responseData || null;
   },
+  ADD_DATA(state, response) {
+    state.data.unshift(response);
+  },
 };
 
 export const actions = {
@@ -76,8 +79,28 @@ export const actions = {
       : response.errors;
   },
 
-  async add({ commit }, formData) {
-    console.log(formData)
+  async add({ commit }, { input }) {
+    const response = await this.$axios.$post("/", {
+      query: `
+        mutation (
+          $input: JSON!
+        ) {
+          createUser (
+            input: $input
+          ) {
+            id,
+            email,
+            fullName,
+            status,
+            dateCreated
+          }
+        }
+      `, variables: { input: input }
+    });
+
+    return typeof response.errors === "undefined"
+      ? commit("ADD_DATA", response.data.createUser)
+      : response.errors;
   },
 
   async get_form_source({ commit }) {
