@@ -1,12 +1,17 @@
 import { Injectable, BadRequestException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "../../models";
+import { User, Group } from "../../models";
 import { UserException } from "../../shared/filters/user.exception";
+import { plainToClass } from 'class-transformer';
+import { ValidateException } from "../../shared/filters/validate.exception";
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
+    constructor(
+        @InjectRepository(User) private readonly userRepository: Repository<User>,
+        @InjectRepository(Group) private readonly groupRepository: Repository<Group>
+    ) {}
 
     async findAll(options: {
         curPage: number;
@@ -74,9 +79,28 @@ export class UsersService {
 
     async create(item: User) {
         try {
+            let myGroups: Group[] = [];
+
+            if (item.groups.length > 0) {
+                await Promise.all(
+                    item.groups.map(async groupId => {
+                        const myGroup = await this.groupRepository.findOneOrFail(groupId);
+
+                        myGroups.push(plainToClass(Group, myGroup));
+                    })
+                );
+
+                item.groups = myGroups;
+            }
+
+
             const myUser = this.userRepository.create(item);
             return await this.userRepository.save(myUser);
         } catch (error) {
+            if (error instanceof ValidateException) {
+                throw error;
+            }
+
             throw new UserException("user:create:fail");
         }
     }
@@ -89,7 +113,11 @@ export class UsersService {
 
             return await this.userRepository.save(myUser);
         } catch (error) {
-            throw error;
+            if (error instanceof ValidateException) {
+                throw error;
+            }
+
+            throw new UserException("user:update:fail");
         }
     }
 
@@ -98,7 +126,7 @@ export class UsersService {
             await this.userRepository.findOneOrFail(id);
             return await this.userRepository.delete(id);
         } catch (error) {
-            throw error;
+            throw new UserException("user:delete:fail");
         }
     }
 }

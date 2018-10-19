@@ -5,16 +5,17 @@ import {
     BeforeInsert,
     BeforeUpdate,
     JoinTable,
-    ManyToMany
+    ManyToMany,
+    BaseEntity
 } from 'typeorm';
-import { IsNotEmpty, IsEmail, validateSync } from "class-validator";
-// import { IsUserAlreadyExist } from './validators/user.is-already-exist';
+import { IsNotEmpty, IsEmail, validate } from "class-validator";
+import { UserExisted } from './validators/user-existed';
 import { ValidateException } from '../shared/filters/validate.exception';
 import { hashPassword } from "../shared/helpers";
 import { Group } from '.';
 
 @Entity({ name: 'user' })
-export class User {
+export class User extends BaseEntity {
     @PrimaryGeneratedColumn({ name: 'u_id' })
     public id: number = 0;
 
@@ -27,7 +28,7 @@ export class User {
     @Column({ name: 'u_email' })
     @IsNotEmpty({ message: 'Email is not empty' })
     @IsEmail()
-    // @IsUserAlreadyExist({ message: 'User already existed.' })
+    @UserExisted({ message: 'User already existed.' })
     public email: string = '';
 
     @Column({ name: 'u_password' })
@@ -108,8 +109,8 @@ export class User {
         this.dateCreated = Math.floor(Date.now() / 1000);
         this.password = hashPassword(this.password);
 
-        const errors = await validateSync(this, {
-            validationError: { target: false }
+        const errors = await validate(this, {
+            validationError: { target: true }
         });
         if (errors.length > 0) {
             throw new ValidateException(errors);
@@ -120,7 +121,7 @@ export class User {
     private async doBeforeUpdate() {
         this.dateModified = Math.floor(Date.now() / 1000);
 
-        const errors = await validateSync(this, {
+        const errors = await validate(this, {
             validationError: { target: false },
             skipMissingProperties: true
         });
@@ -135,6 +136,8 @@ export class User {
     }
 
     public checkPermissions(permissions: string[]) {
+        // is has domain specified or another service, u need custom this function to add
+        // where permission in permission_object table to validate user permission
         permissions = permissions.map(permission => permission.toLowerCase());
 
         return (

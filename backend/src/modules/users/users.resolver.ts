@@ -16,7 +16,7 @@ import * as fs from "fs";
 import * as mkdirp from "mkdirp";
 
 @Resolver("User")
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 export class UsersResolver {
     constructor(
         private readonly usersService: UsersService,
@@ -45,8 +45,8 @@ export class UsersResolver {
     }
 
     @Query("getUser")
-    // @Roles("isSuperUser")
-    // @Permissions("get.user")
+    @Roles("isSuperUser")
+    @Permissions("get.user")
     @UseInterceptors(new UserInterceptor())
     async getUser(_: any, { id }) {
         try {
@@ -93,6 +93,8 @@ export class UsersResolver {
     }
 
     @Query("searchUsers")
+    @Roles("isSuperUser", "isStaff")
+    @Permissions("delete.user")
     async searchUsers(_: any, { q }) {
         try {
             let queryBuilder = bodybuilder()
@@ -102,7 +104,7 @@ export class UsersResolver {
                     [ 'u_full_name', 'u_email'],
                     {
                         query: q.trim(),
-                        fuzziness: 5,
+                        fuzziness: "AUTO",
                         prefix_length: 0
                     }
                 )

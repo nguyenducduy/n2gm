@@ -3,7 +3,6 @@ import {
     BeforeUpdate,
     Column,
     Entity,
-    BaseEntity,
     JoinTable,
     ManyToMany,
     PrimaryGeneratedColumn,
@@ -14,7 +13,7 @@ import { IsNotEmpty, validateSync } from 'class-validator';
 import { Group, PermissionObject } from ".";
 
 @Entity({ name: 'permission' })
-export class Permission extends BaseEntity {
+export class Permission {
     @PrimaryGeneratedColumn({ name: 'pe_id' })
     id: number;
 
@@ -26,9 +25,9 @@ export class Permission extends BaseEntity {
     @IsNotEmpty()
     description: string;
 
-    @ManyToOne(type => PermissionObject, { eager: true, nullable: true })
-    @JoinColumn({ name: 'po_id' })
-    permissionObject: PermissionObject;
+    // @ManyToOne(type => PermissionObject, { eager: true, nullable: true })
+    // @JoinColumn({ name: 'po_id' })
+    // permissionObject: PermissionObject;
 
     @ManyToMany(type => Group)
     @JoinTable({
@@ -44,21 +43,21 @@ export class Permission extends BaseEntity {
     })
     groups: Group[];
 
-    // @BeforeInsert()
-    // doBeforeInsertion() {
-    //   const errors = validateSync(this, { validationError: { target: false } });
+    @BeforeInsert()
+    doBeforeInsertion() {
+      const errors = validateSync(this, { validationError: { target: false } });
 
-    //   if (errors.length > 0) {
-    //     throw errors;
-    //   }
-    // }
+      if (errors.length > 0) {
+        throw errors;
+      }
+    }
 
-    // @BeforeUpdate()
-    // doBeforeUpdate() {
-    //   const errors = validateSync(this, { validationError: { target: false } });
+    @BeforeUpdate()
+    doBeforeUpdate() {
+      const errors = validateSync(this, { validationError: { target: false } });
 
-    //   if (errors.length > 0) {
-    //     throw errors;
-    //   }
-    // }
+      if (errors.length > 0) {
+        throw errors;
+      }
+    }
 }

@@ -37,6 +37,7 @@ export class GroupsService {
                     this.items,
                     plainToClass(Group, groups)
                 );
+
             } catch (error) {
                 throw error;
             }
