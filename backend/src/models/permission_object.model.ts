@@ -8,7 +8,7 @@ import {
     PrimaryGeneratedColumn
 } from 'typeorm';
 import { IsNotEmpty, validateSync } from 'class-validator';
-import { Permission } from '.';
+// import { Permission } from '.';
 
 @Entity({ name: 'permission_object' })
 export class PermissionObject {
@@ -23,8 +23,8 @@ export class PermissionObject {
     @IsNotEmpty()
     screenName: string;
 
-    @OneToMany(type => Permission, permission => permission.permissionObject)
-    permissions: Permission[];
+    // @OneToMany(type => Permission, permission => permission.permissionObject)
+    // permissions: Permission[];
 
     @BeforeInsert()
     doBeforeInsertion() {
