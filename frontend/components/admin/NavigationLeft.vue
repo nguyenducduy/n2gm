@@ -77,7 +77,6 @@ export default class NavigationLeft extends Vue {
 
     .is-active {
       border-right: 2px solid #54a0ff;
-      background-color: #54a0ff21;
     }
   }
 }
