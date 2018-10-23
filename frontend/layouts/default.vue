@@ -51,12 +51,18 @@ body {
 .el-footer {
   height: 46px !important;
   padding: 0;
+  background-color: #fff;
   color: #333;
   text-align: left;
   position: fixed;
   top: 0;
   z-index: 1000;
   width: 100%;
+  border-bottom: 1px solid #e6e6e6;
+
+  .el-menu--horizontal {
+    border: none;
+  }
 }
 
 .el-aside {
@@ -103,8 +109,12 @@ body > .el-container {
 .container {
   min-height: 100vh;
 
+  .panel-body {
+    margin: 17px;
+  }
+
   .topbar {
-    background-color: #ecf0f1;
+    background-color: #dfe4ea;
     height: 50px;
     padding: 17px;
   }
@@ -121,7 +131,6 @@ body > .el-container {
   .pagination-container {
     text-align: right;
     height: 50px;
-    background-color: #ecf0f1;
     margin-top: -17px;
     .add-btn-form {
       display: inline-block;
@@ -131,6 +140,13 @@ body > .el-container {
         text-align: left;
       }
     }
+  }
+
+  .pagination-bottom {
+    margin-right: 17px;
+    display: inline-block;
+    float: right;
+    margin-top: -60px;
   }
 }
 </style>

@@ -44,14 +44,28 @@
             <el-col :md="10" class="pagination-container">
               <add-user-form class="add-btn-form"/>
               <pagination
-                :totalItems="1"
-                :currentPage="1"
-                :recordPerPage="30" />
+                :totalItems="totalItems"
+                :currentPage="query.page"
+                :recordPerPage="recordPerPage" />
+            </el-col>
+          </el-row>
+          <el-row class="table-view">
+            <el-col :md="24">
+              <div class="panel-body">
+                <user-items :loading="pageLoading"></user-items>
+              </div>
+              <div class="pagination-bottom">
+                <pagination
+                  :totalItems="totalItems"
+                  :currentPage="query.page"
+                  :recordPerPage="recordPerPage" />
+              </div>
             </el-col>
           </el-row>
         </section>
       </el-main>
     </el-container>
+
   </el-container>
 </template>
 
@@ -61,12 +75,14 @@ import { Action, State } from 'vuex-class';
 import Breadcrumb from '~/components/admin/Breadcrumb.vue';
 import Pagination from '~/components/admin/Pagination.vue';
 import AddUserForm from '~/components/admin/user/AddUserForm.vue';
+import UserItems from '~/components/admin/user/Items.vue';
 
 @Component({
   components: {
     Breadcrumb,
     Pagination,
-    AddUserForm
+    AddUserForm,
+    UserItems
   }
   // middleware: ['authenticated']
 })
@@ -76,8 +92,12 @@ export default class UserIndexPage extends Vue {
   @State(state => state.users.data) users;
   @State(state => state.users.query) query;
   @State(state => state.users.formSource) formSource;
+  @State(state => state.users.totalItems) totalItems;
+  @State(state => state.users.recordPerPage) recordPerPage;
   @Watch('$route')
   onPageChange() { this.initData() }
+
+  pageLoading = false;
 
   form = {
     keyword: '',
@@ -102,6 +122,8 @@ export default class UserIndexPage extends Vue {
   }
 
   async initData() {
+    this.pageLoading = true;
+
     await this.getFormsourceAction();
     await this.getAllAction({ query: this.$route.query });
 
@@ -109,9 +131,9 @@ export default class UserIndexPage extends Vue {
       keyword: this.$route.query.keyword || '',
       groups: typeof this.$route.query.groups !== 'undefined' ? this.$route.query.groups.split(',') : []
     };
+
+    this.pageLoading = false;
   }
 }
 </script>
 
-<style>
-</style>

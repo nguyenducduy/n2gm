@@ -29,6 +29,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    'flag-icon-css/css/flag-icon.min.css',
     'normalize.css',
     'element-ui/lib/theme-chalk/index.css'
   ],

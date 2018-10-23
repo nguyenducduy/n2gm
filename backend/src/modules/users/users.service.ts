@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User, Group, RelUserGroup } from "../../models";
+import { User, Group } from "../../models";
 import { UserException } from "../../shared/filters/user.exception";
 import { plainToClass } from 'class-transformer';
 import { ValidateException } from "../../shared/filters/validate.exception";
