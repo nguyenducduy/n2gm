@@ -18,7 +18,7 @@
           label-position="top"
           size="small"
           :model="form"
-          :rules="rules"
+
           ref="addUserForm">
           <el-col :md="12">
             <el-form-item :label="$t('pages.admin.user.form.fullName')">
@@ -76,7 +76,8 @@
           </el-col>
           <el-col :md="24">
             <el-form-item style="margin-top: 30px">
-                <el-button type="primary" :loading="loading" @click.native.prevent="onSubmit"> Add
+                <el-button type="primary" :loading="loading" @click.native.prevent="onSubmit">
+                  Add
                 </el-button>
               </el-form-item>
           </el-col>
@@ -114,11 +115,9 @@ export default class AddUserForm extends Vue {
 
   visible = false;
   loading = false;
-  form = {};
-
-  $refs: {
-    addUseForm: HTMLFormElement
-  }
+  form = {
+    fullName: ''
+  };
 
   addSuccess: ({ message: string, timeout: number }) => void;
   addError: ({ message: string, timeout: number }) => void;
@@ -169,32 +168,34 @@ export default class AddUserForm extends Vue {
   }
 
   async onSubmit() {
-    // this.loading = true;
+    this.loading = true;
 
     const errors = await this.addAction({ input: this.form });
 
-    // if (typeof errors !== 'undefined') {
-    //   this.loading = false;
-    //   errors.map(err => {
-    //     this.addError({
-    //       message: err.message,
-    //       timeout: 5000
-    //     });
-    //   })
+    if (typeof errors !== 'undefined') {
+      this.loading = false;
 
-    //   return;
-    // } else {
-    //   this.loading = false;
-    //   this.addSuccess({
-    //     message: `${this.form.name}`,
-    //     timeout: 1000
-    //   });
-    //   this.visible = false;
-    // }
+      errors.map(err => {
+        this.addError({
+          message: err.message,
+          timeout: 5000
+        });
+      })
+
+      return;
+    } else {
+      this.loading = false;
+
+      this.addSuccess({
+        message: `${this.form.fullName}`,
+        timeout: 1000
+      });
+
+      this.visible = false;
+    }
   }
 
   onClose() {
-    this.form = {};
     this.visible = false;
   }
 }

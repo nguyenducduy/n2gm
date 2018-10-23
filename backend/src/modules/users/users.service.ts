@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User, Group } from "../../models";
+import { User, Group, RelUserGroup } from "../../models";
 import { UserException } from "../../shared/filters/user.exception";
 import { plainToClass } from 'class-transformer';
 import { ValidateException } from "../../shared/filters/validate.exception";
@@ -24,6 +24,8 @@ export class UsersService {
         try {
             let objects: [User[], number];
             let qb = this.userRepository.createQueryBuilder("user");
+
+            qb = qb.leftJoinAndSelect("user.groups", "group");
 
             if (options.q) {
                 qb = qb.where("user.fullName like :q or user.email like :q or user.id = :id", {

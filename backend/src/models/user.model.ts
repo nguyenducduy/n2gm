@@ -6,13 +6,14 @@ import {
     BeforeUpdate,
     JoinTable,
     ManyToMany,
+    OneToMany,
     BaseEntity
 } from 'typeorm';
 import { IsNotEmpty, IsEmail, validate } from "class-validator";
 import { UserExisted } from './validators/user-existed';
 import { ValidateException } from '../shared/filters/validate.exception';
 import { hashPassword } from "../shared/helpers";
-import { Group } from '.';
+import { Group, RelUserGroup } from '.';
 
 @Entity({ name: 'user' })
 export class User extends BaseEntity {
@@ -89,7 +90,7 @@ export class User extends BaseEntity {
             referencedColumnName: 'id'
         }
     })
-    public groups: Group[];
+    groups: Group[];
 
     public static IS_SUPER_USER: number = 1;
     public static IS_NOT_SUPER_USER: number = 3;

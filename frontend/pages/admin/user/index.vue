@@ -1,9 +1,9 @@
 <template>
   <el-container>
     <el-aside class="filter-container">
-      <el-form label-position="top">
+      <el-form label-position="top" size="small">
         <el-form-item prop="keyword">
-          <el-input size="small" :placeholder="$t('form.search')"
+          <el-input :placeholder="$t('form.search')"
             v-model="form.keyword"
 
             clearable>
@@ -11,7 +11,7 @@
           </el-input>
         </el-form-item>
         <el-form-item prop="groupid" :label="$t('form.group')">
-          <el-select multiple size="small" v-model="form.groups" :placeholder="$t('default.all')">
+          <el-select multiple v-model="form.groups" :placeholder="$t('default.all')">
             <el-option
               v-for="item in formSource.groups"
               :key="item.id" :label="item.screenName" :value="item.id">
@@ -19,7 +19,7 @@
           </el-select>
         </el-form-item>
         <el-form-item prop="status" :label="$t('form.status')">
-          <el-select clearable size="small" v-model="form.status" :placeholder="$t('default.all')">
+          <el-select clearable v-model="form.status" :placeholder="$t('default.all')">
             <el-option
               v-for="item in formSource.status"
               :key="item.value" :label="item.name" :value="item.value">
@@ -27,8 +27,8 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="small" >{{ $t('default.filter') }}</el-button>
-          <el-button size="small" >{{ $t('default.reset') }}</el-button>
+          <el-button type="primary">{{ $t('default.filter') }}</el-button>
+          <el-button>{{ $t('default.reset') }}</el-button>
         </el-form-item>
       </el-form>
     </el-aside>
@@ -72,6 +72,8 @@ import AddUserForm from '~/components/admin/user/AddUserForm.vue';
 })
 export default class UserIndexPage extends Vue {
   @Action('users/get_form_source') getFormsourceAction;
+  @Action('users/get_all') getAllAction;
+  @State(state => state.users.data) users;
   @State(state => state.users.query) query;
   @State(state => state.users.formSource) formSource;
   @Watch('$route')
@@ -101,10 +103,11 @@ export default class UserIndexPage extends Vue {
 
   async initData() {
     await this.getFormsourceAction();
+    await this.getAllAction({ query: this.$route.query });
 
     this.form = {
       keyword: this.$route.query.keyword || '',
-      groups: this.$route.query.groups.split(',') || []
+      groups: typeof this.$route.query.groups !== 'undefined' ? this.$route.query.groups.split(',') : []
     };
   }
 }

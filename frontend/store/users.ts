@@ -41,6 +41,11 @@ export const actions = {
               email,
               fullName,
               status,
+              groups {
+                id,
+                name,
+                screenName
+              }
               dateCreated
             },
             meta {
