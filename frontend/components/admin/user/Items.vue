@@ -25,8 +25,12 @@
       <el-table-column
         prop="mobileNumber"
         :label="$t('pages.admin.users.label.mobileNumber')"
-        width="130"></el-table-column>
-      <el-table-column prop="oauthProvider" :label="$t('pages.admin.users.label.oauthProvider')"></el-table-column>
+        width="130"
+        align="center"></el-table-column>
+      <el-table-column
+        prop="oauthProvider"
+        :label="$t('pages.admin.users.label.oauthProvider')"
+        align="center"></el-table-column>
       <el-table-column :label="$t('label.group')" width="120" align="center">
         <template slot-scope="scope">
           <el-tag
@@ -51,27 +55,27 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.isSuperUser')" align="center">
+      <el-table-column :label="$t('label.isSuperUser')" align="center" width="50">
         <template slot-scope="scope">
           <i :class="'el-icon-' + (scope.row.isSuperUser === 1 ? 'check' : 'close')"></i>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.isStaff')" align="center">
+      <el-table-column :label="$t('label.isStaff')" align="center" width="50">
         <template slot-scope="scope">
           <i :class="'el-icon-' + (scope.row.isStaff === 1 ? 'check' : 'close')"></i>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.isProfileUpdated')" align="center">
+      <el-table-column :label="$t('label.isProfileUpdated')" align="center" width="50">
         <template slot-scope="scope">
           <i :class="'el-icon-' + (scope.row.isProfileUpdated === 1 ? 'check' : 'close')"></i>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.dateCreated')" width="130" align="center">
+      <el-table-column :label="$t('label.dateCreated')" width="100" align="center">
         <template slot-scope="scope">
           <small>{{ scope.row.dateCreated.readable }}</small>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.dateLastChangePassword')" width="130" align="center">
+      <el-table-column :label="$t('label.dateLastChangePassword')" width="100" align="center">
         <template slot-scope="scope">
           <small v-if="scope.row.dateLastChangePassword.timestamp > 0">{{ scope.row.dateLastChangePassword.readable }}</small>
           <small v-else><i class="el-icon-close"></i></small>

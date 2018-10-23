@@ -5,9 +5,8 @@
         <el-form-item prop="keyword">
           <el-input :placeholder="$t('form.search')"
             v-model="form.keyword"
-
+            suffix-icon="el-icon-search"
             clearable>
-            <el-button slot="append" ><i class="el-icon-fa-search"></i></el-button>
           </el-input>
         </el-form-item>
         <el-form-item prop="groupid" :label="$t('form.group')">
@@ -38,8 +37,8 @@
         <section class="container">
           <el-row class="topbar">
             <el-col :md="14" class="breadcrumb-container">
-              <i class="el-icon-fa-users"></i>
               <breadcrumb />
+              <span class="total-items">({{ totalItems }})</span>
             </el-col>
             <el-col :md="10" class="pagination-container">
               <add-group-form class="add-btn-form"/>

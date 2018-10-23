@@ -52,14 +52,20 @@ export default class Breadcrumb extends Vue {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .app-breadcrumb.el-breadcrumb {
-    display: inline-block;
-    margin-left: 10px;
-    font-size: 16px;
-    font-weight: 400;
-    .no-redirect {
-      color: #5a5e66;
-      cursor: text;
+  .el-breadcrumb {
+    line-height: unset;
+  }
+  .app-breadcrumb {
+    &.el-breadcrumb {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 16px;
+      font-weight: 400;
+      .no-redirect {
+        color: #fff;
+        cursor: text;
+      }
     }
   }
+  
 </style>

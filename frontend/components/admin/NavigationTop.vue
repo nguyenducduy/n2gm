@@ -2,6 +2,12 @@
   <el-row>
     <el-col :md="18">
       <img class="logo" src="/logo-transparent.png"/>
+      <el-input :placeholder="$t('search.anything')"
+        suffix-icon="el-icon-search"
+        class="search-global"
+        size="small"
+        clearable>
+      </el-input>
     </el-col>
     <el-col :md="6">
       <el-dropdown class="avatar-container" v-if="loggedUser" @command="onUserSelect">
@@ -74,6 +80,7 @@ export default class NavigationTop extends Vue {
     width: 45px;
     height: 45px;
     margin-left: 10px;
+    float: left;
   }
   .avatar-container {
     float: right;
@@ -82,6 +89,17 @@ export default class NavigationTop extends Vue {
 
     &:focus  {
       outline: none;
+    }
+  }
+
+  .search-global {
+    float: left;
+    width: 400px;
+    margin-top: 6.5px;
+    margin-left: 26px;
+
+    .el-input__inner {
+      border-radius: 15px !important;
     }
   }
 

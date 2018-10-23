@@ -36,7 +36,7 @@ body {
   .el-input__inner,
   .el-input-group__append,
   .el-input-group__prepend {
-    border-radius: 2px !important;
+    border-radius: 2px;
   }
 
   .el-input-group--append .el-input__inner,
@@ -69,6 +69,7 @@ body {
 
 .el-aside {
   color: #333;
+  background-color: rgba(84, 160, 255, 0.05);
   text-align: left;
   width: 220px !important;
   border-right: solid 1px #e6e6e6;
@@ -119,11 +120,15 @@ body > .el-container {
     height: 50px;
     padding: 17px;
 
-    i,
-    a,
-    .app-breadcrumb.el-breadcrumb .no-redirect,
-    .add-btn-form .el-button--text {
-      color: #fff;
+    .app-breadcrumb {
+      float: left;
+
+      .add-btn-form .el-button--text,
+      a,
+      i {
+        color: #fff;
+      }
+      
     }
   }
 
@@ -133,6 +138,13 @@ body > .el-container {
       font: normal normal normal 16px/1 FontAwesome !important;
       margin-left: 6px;
       margin-right: 6px;
+    }
+
+    .total-items {
+      float: left;
+      margin-left: 3px;
+      font-size: 16px;
+      color: #fff;
     }
   }
 
