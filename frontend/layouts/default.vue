@@ -122,13 +122,15 @@ body > .el-container {
 
     .app-breadcrumb {
       float: left;
-
-      .add-btn-form .el-button--text,
       a,
       i {
         color: #fff;
       }
-      
+    }
+    .add-btn-form {
+      .el-button--text {
+        color: #fff;
+      }
     }
   }
 
