@@ -40,13 +40,24 @@ export const actions = {
               id,
               email,
               fullName,
+              screenName,
+              avatar,
+              mobileNumber,
               status,
+              isSuperUser,
+              isStaff,
+              isVerified,
+              verifyType,
+              isProfileUpdated,
+              oauthProvider,
               groups {
                 id,
                 name,
-                screenName
-              }
-              dateCreated
+                screenName,
+                style
+              },
+              dateCreated,
+              dateLastChangePassword
             },
             meta {
               curPage,
@@ -96,8 +107,24 @@ export const actions = {
             id,
             email,
             fullName,
+            screenName,
+            avatar,
+            mobileNumber,
             status,
-            dateCreated
+            isSuperUser,
+            isStaff,
+            isVerified,
+            verifyType,
+            isProfileUpdated,
+            oauthProvider,
+            groups {
+              id,
+              name,
+              screenName,
+              style
+            },
+            dateCreated,
+            dateLastChangePassword
           }
         }
       `, variables: { input: input }

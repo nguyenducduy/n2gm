@@ -15,29 +15,66 @@
             <img v-if="scope.row.avatar !== ''" :src="scope.row.avatar" width="30" height="30">
             <img v-else src="/avatar-default.png" width="30" height="30">
           </div>
-          <span class="fullname">{{ scope.row.fullName }}</span>
+          <span class="fullname">
+            {{ scope.row.fullName }}
+            <nuxt-link :to="`/admin/profile/${scope.row.id}`">@{{ scope.row.screenName }}</nuxt-link>
+          </span>
           <small class="email">{{ scope.row.email }}</small>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.group')">
+      <el-table-column
+        prop="mobileNumber"
+        :label="$t('pages.admin.users.label.mobileNumber')"
+        width="130"></el-table-column>
+      <el-table-column prop="oauthProvider" :label="$t('pages.admin.users.label.oauthProvider')"></el-table-column>
+      <el-table-column :label="$t('label.group')" width="120" align="center">
         <template slot-scope="scope">
-          <!-- <el-tag type="success" size="small">{{ scope.row.groupid }}</el-tag> -->
+          <el-tag
+            v-for="(group, index) in scope.row.groups" :key="index"
+            :type="group.style"
+            size="mini">
+            {{ group.screenName }}
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.status')" :show-overflow-tooltip="true" class="el-status">
+      <el-table-column :label="$t('label.status')" width="100" align="center">
         <template slot-scope="scope">
-          <!-- <select-editable
-            :id="scope.row.id"
-            :data="scope.row.status"
-            :options="formSource.statusList"
-            store="dhammas"
-            field="status">
-            </select-editable> -->
+          <el-tag :type="scope.row.status.style" size="mini">
+            {{ scope.row.status.label }}
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.dateCreated')" width="130">
+      <el-table-column :label="$t('label.verifyType')" width="100" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.verifyType.style" size="mini">
+            {{ scope.row.verifyType.label }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('label.isSuperUser')" align="center">
+        <template slot-scope="scope">
+          <i :class="'el-icon-' + (scope.row.isSuperUser === 1 ? 'check' : 'close')"></i>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('label.isStaff')" align="center">
+        <template slot-scope="scope">
+          <i :class="'el-icon-' + (scope.row.isStaff === 1 ? 'check' : 'close')"></i>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('label.isProfileUpdated')" align="center">
+        <template slot-scope="scope">
+          <i :class="'el-icon-' + (scope.row.isProfileUpdated === 1 ? 'check' : 'close')"></i>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('label.dateCreated')" width="130" align="center">
         <template slot-scope="scope">
           <small>{{ scope.row.dateCreated.readable }}</small>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('label.dateLastChangePassword')" width="130" align="center">
+        <template slot-scope="scope">
+          <small v-if="scope.row.dateLastChangePassword.timestamp > 0">{{ scope.row.dateLastChangePassword.readable }}</small>
+          <small v-else><i class="el-icon-close"></i></small>
         </template>
       </el-table-column>
       <el-table-column class-name="td-operation" width="130">
@@ -54,7 +91,9 @@
         <el-option v-for="item in bulkList" :key="item.value" :label="item.label" :value="item.value" size="small">
         </el-option>
       </el-select>
-      <el-button style="margin-left: 10px" type="primary" size="small" @click="onBulkSubmit">{{ $t('default.submit') }}</el-button>
+      <el-button style="margin-left: 10px" type="primary" size="small" @click="onBulkSubmit">
+        {{ $t('default.submit') }}
+      </el-button>
     </div>
   </section>
 </template>
@@ -130,24 +169,35 @@ export default class UserItems extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .user-info-table {
   .avatar {
-      margin-right: 10px;
-      float: left;
-      display: inline-block;
-      img {
-        border-radius: 30px !important;
-      }
+    margin-right: 10px;
+    float: left;
+    display: inline-block;
+    img {
+      border-radius: 30px !important;
     }
-    .fullname,
-    .email {
-      display: block;
-      width: 100%;
+  }
+  .fullname,
+  .email {
+    display: block;
+    width: 100%;
+
+    a {
+      color: #1e90ff;
+      text-decoration: none;
     }
-    .el-table .cell.el-tooltip {
-      overflow: visible;
-    }
+  }
+  .el-table .cell.el-tooltip {
+    overflow: visible;
+  }
 }
 
+.el-icon-check {
+  color: #2ed573;
+}
+.el-icon-close {
+  color: #ff4757;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="text" icon="el-icon-plus" @click="visible = true">Add</el-button>
+    <el-button type="text" icon="el-icon-plus" @click="visible = true">Add user</el-button>
     <el-dialog
       ref="dialog"
       :visible.sync="visible"

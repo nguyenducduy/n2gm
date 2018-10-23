@@ -95,6 +95,9 @@ export class UsersService {
                 item.groups = myGroups;
             }
 
+            item.verifyType = User.VERIFY_TYPE_EMAIL;
+            item.isVerified = User.IS_VERIFIED;
+            item.isProfileUpdated = User.IS_PROFILE_NOT_UPDATED;
 
             const myUser = this.userRepository.create(item);
             return await this.userRepository.save(myUser);

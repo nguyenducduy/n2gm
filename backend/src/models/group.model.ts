@@ -24,6 +24,9 @@ export class Group {
     @IsNotEmpty()
     screenName: string;
 
+    @Column({ name: 'gr_style' })
+    style: string;
+
     @ManyToMany(type => User)
     @JoinTable({
         name: 'rel_user_group',

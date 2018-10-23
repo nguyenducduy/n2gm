@@ -9,18 +9,13 @@ export default function ({ store, app: { $axios }, redirect }) {
     return config;
   });
 
-  // $axios.onResponse(response => {
-    // if (typeof response.errors !== 'undefined') {
-    //   return Message({
-    //     showClose: true,
-    //     message: response.errors[0].message,
-    //     type: 'error',
-    //     duration: 2 * 1000
-    //   })
-    // } else {
-    //   return response;
-    // }
-  // });
+  $axios.onResponse(response => {
+    if (typeof response.data.errors !== 'undefined') {
+      return redirect('/5xx');
+    } else {
+      return response;
+    }
+  });
 
   $axios.onError(error => {
     console.log(error);

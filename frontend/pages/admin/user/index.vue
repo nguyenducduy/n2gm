@@ -42,6 +42,7 @@
               <breadcrumb />
             </el-col>
             <el-col :md="10" class="pagination-container">
+              <add-group-form class="add-btn-form"/>
               <add-user-form class="add-btn-form"/>
               <pagination
                 :totalItems="totalItems"
@@ -75,6 +76,7 @@ import { Action, State } from 'vuex-class';
 import Breadcrumb from '~/components/admin/Breadcrumb.vue';
 import Pagination from '~/components/admin/Pagination.vue';
 import AddUserForm from '~/components/admin/user/AddUserForm.vue';
+import AddGroupForm from '~/components/admin/user/AddGroupForm.vue';
 import UserItems from '~/components/admin/user/Items.vue';
 
 @Component({
@@ -82,6 +84,7 @@ import UserItems from '~/components/admin/user/Items.vue';
     Breadcrumb,
     Pagination,
     AddUserForm,
+    AddGroupForm,
     UserItems
   }
   // middleware: ['authenticated']

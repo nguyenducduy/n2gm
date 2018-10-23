@@ -13,7 +13,7 @@ import { IsNotEmpty, IsEmail, validate } from "class-validator";
 import { UserExisted } from './validators/user-existed';
 import { ValidateException } from '../shared/filters/validate.exception';
 import { hashPassword } from "../shared/helpers";
-import { Group, RelUserGroup } from '.';
+import { Group } from '.';
 
 @Entity({ name: 'user' })
 export class User extends BaseEntity {
@@ -173,6 +173,21 @@ export class User extends BaseEntity {
         return name;
     }
 
+    public getStatusStyle() {
+        let style: string = '';
+
+        switch (this.status) {
+            case User.STATUS_ACTIVE:
+                style = "success";
+                break;
+            case User.STATUS_BLOCKED:
+                style = "danger";
+                break;
+        }
+
+        return style;
+    }
+
     public getIsVerifiedName() {
         let name: string = '';
 
@@ -201,6 +216,21 @@ export class User extends BaseEntity {
         }
 
         return name;
+    }
+
+    public getVerifyTypeStyle() {
+        let style: string = '';
+
+        switch (this.status) {
+            case User.VERIFY_TYPE_EMAIL:
+                style = "primary";
+                break;
+            case User.VERIFY_TYPE_PHONE:
+                style = "success";
+                break;
+        }
+
+        return style;
     }
 
     public getIsProfileUpdatedName() {

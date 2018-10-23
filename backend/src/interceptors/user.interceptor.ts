@@ -26,11 +26,21 @@ export class UserInterceptor<T> implements NestInterceptor<T, Response<T>> {
     private _transform(user) {
         user.status = {
             label: user.getStatusName(),
-            value: user.status
+            value: user.status,
+            style: user.getStatusStyle()
+        };
+        user.verifyType = {
+            label: user.getVerifyTypeName(),
+            value: user.verifyType,
+            style: user.getVerifyTypeStyle()
         };
         user.dateCreated = {
             readable: moment.unix(user.dateCreated).format("MMM Do YYYY"),
             timestamp: user.dateCreated
+        };
+        user.dateLastChangePassword = {
+            readable: moment.unix(user.dateLastChangePassword).format("MMM Do YYYY"),
+            timestamp: user.dateLastChangePassword
         };
     }
 }

@@ -29,6 +29,7 @@ body {
   font-size: 14px;
 
   .el-button,
+  .el-tag,
   .el-input__inner,
   .el-input-group__append,
   .el-input-group__prepend {
@@ -114,9 +115,16 @@ body > .el-container {
   }
 
   .topbar {
-    background-color: #dfe4ea;
+    background-color: #54a0ff;
     height: 50px;
     padding: 17px;
+
+    i,
+    a,
+    .app-breadcrumb.el-breadcrumb .no-redirect,
+    .add-btn-form .el-button--text {
+      color: #fff;
+    }
   }
 
   .breadcrumb-container {
@@ -135,6 +143,7 @@ body > .el-container {
     .add-btn-form {
       display: inline-block;
       margin-right: 16px;
+      margin-top: 5px;
 
       .el-dialog {
         text-align: left;

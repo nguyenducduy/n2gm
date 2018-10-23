@@ -1,21 +1,7 @@
 <template>
   <el-row>
     <el-col :md="18">
-      <el-menu
-        mode="horizontal"
-        unique-opened
-        :default-active="$route.path"
-        router>
-        <el-menu-item index="/">
-          <img src="/logo-transparent.png" width="25" height="20" />
-        </el-menu-item>
-        <el-menu-item index="/admin/dashboard">
-          {{ $t('default.list') }}
-        </el-menu-item>
-        <el-menu-item index="/admin/users">
-          {{ $t('default.user') }}
-        </el-menu-item>
-      </el-menu>
+      <img class="logo" src="/logo-transparent.png"/>
     </el-col>
     <el-col :md="6">
       <el-dropdown class="avatar-container" v-if="loggedUser" @command="onUserSelect">
@@ -84,59 +70,46 @@ export default class Navigation extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.el-menu--horizontal {
-  height: 45px;
-
-  .el-menu-item {
+ img.logo {
+    width: 45px;
     height: 45px;
-    line-height: 45px;
+    margin-left: 6px;
   }
+  .avatar-container {
+    float: right;
+    margin-top: 7px;
+    margin-right: 17px;
 
-  .el-submenu {
-    .el-menu {
-      top: 50px;
+    &:focus  {
+      outline: none;
     }
-    .el-submenu__title {
-      height: 45px;
-      line-height: 45px;
+  }
+
+  .avatar-wrapper
+  {
+    display: -webkit-flex;
+    display: flex;
+    cursor: pointer;
+    .user-name {
+      margin: 0 6px;
+      line-height: 30px;
+    }
+    .el-icon-arrow-down {
+      line-height: 30px;
+    }
+    img {
+      border-radius: 30px;
     }
   }
-}
-.avatar-container {
-  float: right;
-  margin-top: 7px;
-  margin-right: 17px;
 
-  &:focus  {
-    outline: none;
+  .locale-container {
+    cursor: pointer;
+    float: right;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 14px;
+    font-size: 14px;
+    border-right: 1px solid #ecf0f1;
+    padding-right: 15px;
   }
-}
-
-.avatar-wrapper
-{
-  display: -webkit-flex;
-  display: flex;
-  cursor: pointer;
-  .user-name {
-    margin: 0 6px;
-    line-height: 30px;
-  }
-  .el-icon-arrow-down {
-    line-height: 30px;
-  }
-  img {
-    border-radius: 30px;
-  }
-}
-
-.locale-container {
-  cursor: pointer;
-  float: right;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-top: 14px;
-  font-size: 14px;
-  border-right: 1px solid #ecf0f1;
-  padding-right: 15px;
-}
 </style>
