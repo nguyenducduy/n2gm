@@ -1,19 +1,22 @@
 <template>
   <el-container>
     <el-header>
-      <navigation></navigation>
+      <navigation-top></navigation-top>
     </el-header>
+    <navigation-left></navigation-left>
     <nuxt/>
   </el-container>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import Navigation from '@/components/admin/Navigation.vue'
+import NavigationTop from '@/components/admin/NavigationTop.vue'
+import NavigationLeft from '@/components/admin/NavigationLeft.vue'
 
 @Component({
   components: {
-    Navigation
+    NavigationTop,
+    NavigationLeft
   }
 })
 export default class DefaultLayout extends Vue {}
@@ -55,8 +58,6 @@ body {
   background-color: #fff;
   color: #333;
   text-align: left;
-  position: fixed;
-  top: 0;
   z-index: 1000;
   width: 100%;
   border-bottom: 1px solid #e6e6e6;
@@ -71,7 +72,7 @@ body {
   text-align: left;
   width: 220px !important;
   border-right: solid 1px #e6e6e6;
-  margin-top: 46px;
+  margin-left: 64px;
 
   &.filter-container {
     padding: 12px 17px 0 17px;
@@ -87,7 +88,6 @@ body {
 }
 
 .el-main {
-  margin-top: 46px;
   background-color: #fff;
   color: #333;
   text-align: left;

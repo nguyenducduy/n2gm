@@ -54,7 +54,7 @@ import { Vue, Component } from 'nuxt-property-decorator';
 import { Getter } from 'vuex-class';
 
 @Component
-export default class Navigation extends Vue {
+export default class NavigationTop extends Vue {
   @Getter loggedUser;
 
   onUserSelect(path) {
@@ -73,7 +73,7 @@ export default class Navigation extends Vue {
  img.logo {
     width: 45px;
     height: 45px;
-    margin-left: 6px;
+    margin-left: 10px;
   }
   .avatar-container {
     float: right;
