@@ -5,7 +5,8 @@ export const state = () => ({
   query: {},
   formSource: {},
   totalItems: 0,
-  recordPerPage: 0
+  recordPerPage: 0,
+  tableLoading: false
 });
 
 export const mutations = {
@@ -133,6 +134,24 @@ export const actions = {
     return typeof response.errors === "undefined"
       ? commit("ADD_DATA", response.data.createUser)
       : response.errors;
+  },
+
+  async bulk({ commit }, { input }) {
+    const response = await this.$axios.$post("/", {
+      query: `
+        mutation (
+          $input: JSON!
+        ) {
+          bulkUsers (
+            input: $input
+          )
+        }
+      `, variables: { input: input }
+    });
+    console.log(response);
+    // return typeof response.errors === "undefined"
+    //   ? setToken(response.data.login.token)
+    //   : response.errors;
   },
 
   async get_form_source({ commit }) {

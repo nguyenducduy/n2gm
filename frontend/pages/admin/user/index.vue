@@ -52,7 +52,7 @@
           <el-row class="table-view">
             <el-col :md="24">
               <div class="panel-body">
-                <user-items :loading="pageLoading"></user-items>
+                <user-items :loadingState="pageLoading"></user-items>
               </div>
               <div class="pagination-bottom">
                 <pagination

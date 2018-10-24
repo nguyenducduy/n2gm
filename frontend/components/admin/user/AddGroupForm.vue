@@ -27,6 +27,9 @@
             <el-form-item :label="$t('pages.admin.user.form.groupScreenName')">
               <el-input type="text" v-model="form.screenName"></el-input>
             </el-form-item>
+            <el-form-item :label="$t('pages.admin.user.form.groupStyle')">
+              <el-input type="text" v-model="form.style"></el-input>
+            </el-form-item>
           </el-col>
           <el-col :md="24">
             <el-form-item style="margin-top: 30px">

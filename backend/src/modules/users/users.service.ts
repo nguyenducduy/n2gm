@@ -1,5 +1,5 @@
-import { Injectable, BadRequestException } from "@nestjs/common";
-import { Repository } from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { Repository, getConnection } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User, Group } from "../../models";
 import { UserException } from "../../shared/filters/user.exception";
@@ -71,6 +71,46 @@ export class UsersService {
         }
     }
 
+    async bulk({ items, action }) {
+        const queryRunner = getConnection().createQueryRunner();
+        await queryRunner.startTransaction();
+
+        try {
+            let userIds = [];
+            items.map(user => {
+                userIds.push(user.id)
+            });
+
+            switch (action) {
+                case 'delete':
+                    await queryRunner.manager.delete(User, userIds);
+                    await queryRunner.commitTransaction();
+
+                    return userIds;
+                case 'active':
+                    items.map(async user => {
+                        await queryRunner.manager.update(User, user.id, { status: User.STATUS_ACTIVE });
+                    });
+
+                    await queryRunner.commitTransaction();
+                    return userIds;
+                case 'block':
+                    items.map(async user => {
+                        await queryRunner.manager.update(User, user.id, { status: User.STATUS_BLOCKED });
+                    });
+
+                    await queryRunner.commitTransaction();
+                    return userIds;
+            }
+        } catch (error) {
+            await queryRunner.rollbackTransaction();
+
+            throw error;
+        } finally {
+            await queryRunner.release();
+        }
+    }
+
     async findOne(id: number) {
         try {
             return await this.userRepository.findOneOrFail(id);
@@ -95,6 +135,7 @@ export class UsersService {
                 item.groups = myGroups;
             }
 
+            item.screenName = item.fullName.toLowerCase() + '.' + Math.floor(Date.now() / 1000);
             item.verifyType = User.VERIFY_TYPE_EMAIL;
             item.isVerified = User.IS_VERIFIED;
             item.isProfileUpdated = User.IS_PROFILE_NOT_UPDATED;

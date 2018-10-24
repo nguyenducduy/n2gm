@@ -57,6 +57,20 @@ export class UsersResolver {
         }
     }
 
+    @Mutation("bulkUsers")
+    @Roles("isSuperUser")
+    @Permissions("bulk.users")
+    async bulkUsers(_: any, { input }) {
+        try {
+            return await this.usersService.bulk({
+                items: input.itemSelected,
+                action: input.actionSelected
+            });
+        } catch (error) {
+            throw error;
+        }
+    }
+
     @Mutation("createUser")
     @Roles("isSuperUser")
     @Permissions("add.user")

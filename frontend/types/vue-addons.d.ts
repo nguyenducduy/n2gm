@@ -1,14 +1,17 @@
-import Vue, { ComponentOptions } from 'vue'
-import { Store } from 'vuex'
-import { Route } from 'vue-router'
-import { AxiosInstance, AxiosRequestConfig } from 'axios'
+import Vue, { ComponentOptions } from 'vue';
+import { Store } from 'vuex';
+import { Route } from 'vue-router';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { MessageBox } from 'element-ui';
 
-// declare module 'vue/types/vue' {
-//     interface Vue {
-//         $socket: SocketIOClient.Socket;
-//         $validator: Validator;
-//     }
-// }
+declare module 'vue/types/vue' {
+    interface Vue {
+        // $socket: SocketIOClient.Socket;
+        // $validator: Validator;
+      $message: MessageBox.prompt;
+      $confirm: MessageBox.confirm;
+    }
+}
 
 declare module 'vue/types/options' {
   interface ComponentOptions<V extends Vue> {

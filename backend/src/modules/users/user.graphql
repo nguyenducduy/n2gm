@@ -48,6 +48,7 @@ type Query {
 }
 
 type Mutation {
+  bulkUsers(input: JSON!): [Int]
   createUser(input: JSON!): User!
   updateUser(id: Int!, input: JSON!): User!
   deleteUser(id: Int!): Boolean!

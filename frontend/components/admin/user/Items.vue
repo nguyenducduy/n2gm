@@ -5,7 +5,7 @@
       :data="users"
       style="width: 100%"
       @selection-change="onSelectionChange"
-      v-loading.fullscreen.lock="loading"
+      v-loading.fullscreen.lock="loadingState"
       row-key="id">
       <el-table-column type="selection"></el-table-column>
       <el-table-column :label="$t('pages.admin.users.label.name')"
@@ -13,7 +13,7 @@
         <template slot-scope="scope">
           <div class="avatar">
             <img v-if="scope.row.avatar !== ''" :src="scope.row.avatar" width="30" height="30">
-            <img v-else src="/avatar-default.png" width="30" height="30">
+            <avatar v-else :username="scope.row.fullName" :size="30"></avatar>
           </div>
           <span class="fullname">
             {{ scope.row.fullName }}
@@ -105,10 +105,15 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
 import { Action, State } from 'vuex-class';
+import Avatar from 'vue-avatar';
 
-@Component
+@Component({
+  components: {
+    Avatar
+  }
+})
 export default class UserItems extends Vue {
-  @Prop() loading: boolean;
+  @Prop() loadingState: boolean;
   @Action('users/bulk') bulkAction;
   @State(state => state.users.data) users;
 
@@ -125,49 +130,47 @@ export default class UserItems extends Vue {
 
   onSelectionChange(item) { this.bulkSelected = item; }
 
-  onBulkSubmit() {
+  async onBulkSubmit() {
     if (this.bulkSelected.length === 0) {
-    //   this.$message({
-    //     showClose: true,
-    //     message: this.$t('default.msg.noItemSelected').toString(),
-    //     type: 'warning',
-    //     duration: 2 * 1000
-    //   })
-    // } else if (this.bulkName === '') {
-    //   this.$message({
-    //     showClose: true,
-    //     message: this.$t('default.msg.noActionChosen').toString(),
-    //     type: 'warning',
-    //     duration: 2 * 1000
-    //   });
-    // } else {
-    //   this.$confirm(this.$t('msg.confirmBulk').toString(), this.$t('default.warning').toString(), {
-    //     confirmButtonText: this.$t('default.msg.confirm').toString(),
-    //     cancelButtonText: this.$t('default.msg.cancel').toString(),
-    //     type: 'warning',
-    //     dangerouslyUseHTMLString: true
-    //   })
-    //   .then(async () => {
-    //     await this.bulkAction({
-    //         formData: {
-    //           itemSelected: this.bulkSelected,
-    //           actionSelected: this.bulkName
-    //         }
-    //       })
-    //       .then(async () => {
-    //         let queryParams = Object.assign({}, this.$route.query);
+      this.$message({
+        showClose: true,
+        message: this.$t('default.msg.noItemSelected').toString(),
+        type: 'warning',
+        duration: 2 * 1000
+      })
 
-    //         await this.listAction({ query: queryParams })
-    //           .then(() => {
-    //             this.$message({
-    //               showClose: true,
-    //               message: `${this.bulkName.charAt(0).toUpperCase() + this.bulkName.slice(1)} ${this.$t('default.msg.deleteSuccess')}`,
-    //               type: 'success',
-    //               duration: 2 * 1000
-    //             });
-    //           })
-    //       });
-    //   });
+      return;
+    };
+
+    if (this.bulkName === '') {
+      this.$message({
+        showClose: true,
+        message: this.$t('default.msg.noActionChosen').toString(),
+        type: 'warning',
+        duration: 2 * 1000
+      });
+
+      return;
+    }
+
+    const isConfirm = await this.$confirm(
+      this.$t('msg.confirmBulk').toString(),
+      this.$t('default.warning').toString(),
+      {
+        confirmButtonText: this.$t('default.msg.confirm').toString(),
+        cancelButtonText: this.$t('default.msg.cancel').toString(),
+        type: 'warning',
+        dangerouslyUseHTMLString: true
+      }
+    );
+
+    if (isConfirm) {
+      await this.bulkAction({
+        input: {
+          itemSelected: this.bulkSelected,
+          actionSelected: this.bulkName
+        }
+      });
     }
   }
 }

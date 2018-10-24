@@ -21,3 +21,5 @@
 
 - rm -rf /var/lock/subsys/elasticsearch
 - Stop -> Remove Subsys -> Start
+
+# Bulk action using https://github.com/typeorm/typeorm/blob/master/docs/entity-manager-api.md

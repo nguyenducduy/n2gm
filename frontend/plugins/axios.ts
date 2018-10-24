@@ -11,7 +11,7 @@ export default function ({ store, app: { $axios }, redirect }) {
 
   $axios.onResponse(response => {
     if (typeof response.data.errors !== 'undefined') {
-      return redirect('/5xx');
+      // return redirect('/5xx');
     } else {
       return response;
     }
