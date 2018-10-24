@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Repository, getConnection } from "typeorm";
+import { Repository, getConnection, Brackets } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User, Group } from "../../models";
 import { UserException } from "../../shared/filters/user.exception";
@@ -17,9 +17,9 @@ export class UsersService {
         curPage: number;
         perPage: number;
         q?: string;
-        group?: number;
         sort?: string;
-        cache?: boolean
+        groups?: string;
+        cache?: boolean;
     }) {
         try {
             let objects: [User[], number];
@@ -31,6 +31,14 @@ export class UsersService {
                 qb = qb.where("user.fullName like :q or user.email like :q or user.id = :id", {
                     q: `%${options.q}%`,
                     id: options.q
+                });
+            }
+
+            if (options.groups) {
+                options.groups.split(',').map((groupId, index) => {
+                    let bindParam = {};
+                    bindParam[`group${index}`] = groupId;
+                    qb = qb.orWhere(`group.id = :group${index}`, bindParam);
                 });
             }
 

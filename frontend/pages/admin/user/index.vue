@@ -5,11 +5,12 @@
         <el-form-item prop="keyword">
           <el-input :placeholder="$t('form.search')"
             v-model="form.keyword"
+            @keyup.enter.native="onFilter"
             suffix-icon="el-icon-search"
             clearable>
           </el-input>
         </el-form-item>
-        <el-form-item prop="groupid" :label="$t('form.group')">
+        <el-form-item prop="groups" :label="$t('form.group')">
           <el-select multiple v-model="form.groups" :placeholder="$t('default.all')">
             <el-option
               v-for="item in formSource.groups"
@@ -26,8 +27,8 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">{{ $t('default.filter') }}</el-button>
-          <el-button>{{ $t('default.reset') }}</el-button>
+          <el-button type="primary" @click="onFilter">{{ $t('default.filter') }}</el-button>
+          <el-button @click="onReset">{{ $t('default.reset') }}</el-button>
         </el-form-item>
       </el-form>
     </el-aside>
@@ -77,6 +78,7 @@ import Pagination from '~/components/admin/Pagination.vue';
 import AddUserForm from '~/components/admin/user/AddUserForm.vue';
 import AddGroupForm from '~/components/admin/user/AddGroupForm.vue';
 import UserItems from '~/components/admin/user/Items.vue';
+const querystring = require('querystring');
 
 @Component({
   components: {
@@ -101,7 +103,7 @@ export default class UserIndexPage extends Vue {
 
   pageLoading = false;
 
-  form = {
+  form: any = {
     keyword: '',
     groups: []
   };
@@ -119,6 +121,19 @@ export default class UserIndexPage extends Vue {
     };
   }
 
+  onFilter() {
+    this.query.page = 1;
+    const pageUrl = `?${querystring.stringify(
+      this.form
+    )}&${querystring.stringify(this.query)}`;
+
+    return this.$router.push(pageUrl);
+  }
+
+  onReset() {
+    return this.$router.push('/admin/user');
+  }
+
   mounted() {
     this.initData();
   }
@@ -131,7 +146,7 @@ export default class UserIndexPage extends Vue {
 
     this.form = {
       keyword: this.$route.query.keyword || '',
-      groups: typeof this.$route.query.groups !== 'undefined' ? this.$route.query.groups.split(',') : []
+      groups: this.$route.query.groups || []
     };
 
     this.pageLoading = false;

@@ -9,7 +9,7 @@
       row-key="id">
       <el-table-column type="selection"></el-table-column>
       <el-table-column :label="$t('pages.admin.users.label.name')"
-        :show-overflow-tooltip="true" width="250">
+        :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <div class="avatar">
             <img v-if="scope.row.avatar !== ''" :src="scope.row.avatar" width="30" height="30">
@@ -30,6 +30,7 @@
       <el-table-column
         prop="oauthProvider"
         :label="$t('pages.admin.users.label.oauthProvider')"
+        width="130"
         align="center"></el-table-column>
       <el-table-column :label="$t('label.group')" width="120" align="center">
         <template slot-scope="scope">

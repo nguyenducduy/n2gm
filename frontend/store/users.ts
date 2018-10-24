@@ -34,6 +34,7 @@ export const actions = {
               curPage: ${typeof query.page !== "undefined" ? query.page : 1},
               perPage: ${typeof query.limit !== "undefined" ? query.limit : 30},
               q: "${typeof query.q !== "undefined" ? query.q : ""}",
+              groups: "${typeof query.groups !== "undefined" ? query.groups : ""}",
               sort: "${typeof query.sort !== "undefined" ? query.sort : "-id"}"
             }
           ) {

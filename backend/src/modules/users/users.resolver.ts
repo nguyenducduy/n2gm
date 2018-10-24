@@ -33,7 +33,8 @@ export class UsersResolver {
                 curPage: opts.curPage,
                 perPage: opts.perPage,
                 q: opts.q,
-                sort: opts.sort
+                sort: opts.sort,
+                groups: opts.groups
             });
             return {
                 users: plainToClass(User, myUsers.users),
