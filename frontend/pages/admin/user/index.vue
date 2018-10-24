@@ -105,7 +105,8 @@ export default class UserIndexPage extends Vue {
 
   form: any = {
     keyword: '',
-    groups: []
+    groups: [],
+    status: null
   };
 
   head() {
@@ -146,7 +147,8 @@ export default class UserIndexPage extends Vue {
 
     this.form = {
       keyword: this.$route.query.keyword || '',
-      groups: this.$route.query.groups || []
+      groups: this.$route.query.groups || [],
+      status: parseInt(this.$route.query.status) || null,
     };
 
     this.pageLoading = false;
