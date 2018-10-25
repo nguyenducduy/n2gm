@@ -2,15 +2,15 @@
   <el-container>
     <el-aside class="filter-container">
       <el-form label-position="top" size="small">
-        <el-form-item prop="keyword">
+        <el-form-item>
           <el-input :placeholder="$t('form.search')"
-            v-model="form.keyword"
+            v-model="form.q"
             @keyup.enter.native="onFilter"
             suffix-icon="el-icon-search"
             clearable>
           </el-input>
         </el-form-item>
-        <el-form-item prop="groups" :label="$t('form.group')">
+        <el-form-item :label="$t('form.group')">
           <el-select multiple v-model="form.groups" :placeholder="$t('default.all')">
             <el-option
               v-for="item in formSource.groups"
@@ -18,13 +18,45 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="status" :label="$t('form.status')">
-          <el-select clearable v-model="form.status" :placeholder="$t('default.all')">
+        <el-form-item :label="$t('form.status')">
+          <el-select clearable v-model="form.status" :placeholder="$t('default.all')" class="is-focus">
             <el-option
               v-for="item in formSource.status"
               :key="item.value" :label="item.name" :value="item.value">
             </el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('form.verifyType')">
+          <el-select clearable v-model="form.verifyType" :placeholder="$t('default.all')">
+            <el-option
+              v-for="item in formSource.verifyTypes"
+              :key="item.value" :label="item.name" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-switch
+            v-model="form.isSuperUser"
+            :active-value="1"
+            :inactive-value-value="3"
+            :active-text="$t('form.isSuperUser')">
+          </el-switch>
+        </el-form-item>
+        <el-form-item>
+          <el-switch
+            v-model="form.isStaff"
+            :active-value="1"
+            :inactive-value-value="3"
+            :active-text="$t('form.isStaff')">
+          </el-switch>
+        </el-form-item>
+        <el-form-item>
+          <el-switch
+            v-model="form.isVerified"
+            :active-value="1"
+            :inactive-value-value="3"
+            :active-text="$t('form.isVerified')">
+          </el-switch>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onFilter">{{ $t('default.filter') }}</el-button>
@@ -53,7 +85,12 @@
           <el-row class="table-view">
             <el-col :md="24">
               <div class="panel-body">
-                <user-items :loadingState="pageLoading"></user-items>
+                <user-items
+                  :loadingState="pageLoading"
+                  @setLoading="setLoading"
+                  @unsetLoading="unsetLoading"
+                  @reload="initData">
+                </user-items>
               </div>
               <div class="pagination-bottom">
                 <pagination
@@ -87,7 +124,7 @@ const querystring = require('querystring');
     AddUserForm,
     AddGroupForm,
     UserItems
-  }
+  },
   // middleware: ['authenticated']
 })
 export default class UserIndexPage extends Vue {
@@ -101,13 +138,8 @@ export default class UserIndexPage extends Vue {
   @Watch('$route')
   onPageChange() { this.initData() }
 
-  pageLoading = false;
-
-  form: any = {
-    keyword: '',
-    groups: [],
-    status: null
-  };
+  pageLoading: boolean = false;
+  form: any = {};
 
   head() {
     return {
@@ -135,6 +167,14 @@ export default class UserIndexPage extends Vue {
     return this.$router.push('/admin/user');
   }
 
+  setLoading() {
+    this.pageLoading = true;
+  }
+
+  unsetLoading() {
+    this.pageLoading = false;
+  }
+
   mounted() {
     this.initData();
   }
@@ -146,10 +186,25 @@ export default class UserIndexPage extends Vue {
     await this.getAllAction({ query: this.$route.query });
 
     this.form = {
-      keyword: this.$route.query.keyword || '',
-      groups: this.$route.query.groups || [],
+      q: this.$route.query.q || '',
       status: parseInt(this.$route.query.status) || null,
+      verifyType: parseInt(this.$route.query.verifyType) || null,
+      groups: [],
+      isSuperUser: parseInt(this.$route.query.isSuperUser) || null,
+      isStaff: parseInt(this.$route.query.isStaff) || null,
+      isVerified: parseInt(this.$route.query.isVerified) || null
     };
+
+    // map groups because it's multiple selected
+    if (typeof this.$route.query.groups !== 'undefined'
+      && this.$route.query.groups.length > 1) {
+      const myGroups: any = this.$route.query.groups;
+      this.form['groups'] = myGroups.map(g => parseInt(g));
+    } else if (typeof this.$route.query.groups !== 'undefined') {
+      this.form['groups'] = [parseInt(this.$route.query.groups)];
+    } else {
+      this.form['groups'] = [];
+    }
 
     this.pageLoading = false;
   }

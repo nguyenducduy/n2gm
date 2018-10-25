@@ -37,7 +37,8 @@ type UserSearchResults {
 
 type Formsource {
   groups: JSON,
-  status: JSON
+  status: JSON,
+  verifyTypes: JSON
 }
 
 type Query {

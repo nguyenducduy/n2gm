@@ -19,6 +19,11 @@ export class UsersService {
         q?: string;
         sort?: string;
         groups?: string;
+        status?: number;
+        verifyType?: number;
+        isVerified?: number;
+        isSuperUser?: number;
+        isStaff?: number;
         cache?: boolean;
     }) {
         try {
@@ -28,18 +33,44 @@ export class UsersService {
             qb = qb.leftJoinAndSelect("user.groups", "group");
 
             if (options.q) {
-                qb = qb.where("user.fullName like :q or user.email like :q or user.id = :id", {
+                qb = qb.where("user.fullName LIKE :q OR user.email LIKE :q OR user.id = :id OR user.mobileNumber LIKE :q", {
                     q: `%${options.q}%`,
                     id: options.q
                 });
             }
 
+            // filter by group id
             if (options.groups) {
                 options.groups.split(',').map((groupId, index) => {
                     let bindParam = {};
                     bindParam[`group${index}`] = groupId;
                     qb = qb.orWhere(`group.id = :group${index}`, bindParam);
                 });
+            }
+
+            // filter by status
+            if (options.status) {
+                qb = qb.andWhere('user.status = :status', { status: options.status });
+            }
+
+            // filter by verify type
+            if (options.verifyType) {
+                qb = qb.andWhere('user.verifyType = :verifyType', { verifyType: options.verifyType });
+            }
+
+            // filter by super user role
+            if (options.isSuperUser) {
+                qb = qb.andWhere('user.isSuperUser = :isSuperUser', { isSuperUser: options.isSuperUser });
+            }
+
+            // filter by staff role
+            if (options.isStaff) {
+                qb = qb.andWhere('user.isStaff = :isStaff', { isStaff: options.isStaff });
+            }
+
+            // filter by verified
+            if (options.isVerified) {
+                qb = qb.andWhere('user.isVerified = :isVerified', { isVerified: options.isVerified });
             }
 
             // sort
@@ -188,7 +219,8 @@ export class UsersService {
         try {
             let output = {};
             output['groups'] = await this.groupRepository.find();
-            output['status'] = User.getStatusList()
+            output['status'] = User.getStatusList();
+            output['verifyTypes'] = User.getVerifyTypeList();
 
             return output;
         } catch (error) {

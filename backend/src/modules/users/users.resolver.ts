@@ -34,7 +34,12 @@ export class UsersResolver {
                 perPage: opts.perPage,
                 q: opts.q,
                 sort: opts.sort,
-                groups: opts.groups
+                groups: opts.groups,
+                status: opts.status,
+                verifyType: opts.verifyType,
+                isSuperUser: opts.isSuperUser,
+                isStaff: opts.isStaff,
+                isVerified: opts.isVerified
             });
             return {
                 users: plainToClass(User, myUsers.users),

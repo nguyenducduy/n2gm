@@ -47,10 +47,6 @@ export default class Pagination extends Vue {
     {
       value: "100",
       label: "100"
-    },
-    {
-      value: "300",
-      label: "300"
     }
   ];
 

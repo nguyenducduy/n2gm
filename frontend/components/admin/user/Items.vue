@@ -82,11 +82,11 @@
           <small v-else><i class="el-icon-close"></i></small>
         </template>
       </el-table-column>
-      <el-table-column class-name="td-operation" width="130">
+      <el-table-column class-name="td-operation" width="100" align="right">
         <template slot-scope="scope">
           <el-button-group class="operation">
-            <!-- <el-button icon="el-icon-edit" size="mini" @click="onShowEditForm(scope.row.id)"></el-button> -->
-            <!-- <delete-button :id="scope.row.id" store="users"></delete-button> -->
+            <edit-user-form></edit-user-form>
+            <del-button :id="scope.row.id" store="users"></del-button>
           </el-button-group>
         </template>
       </el-table-column>
@@ -106,11 +106,24 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
 import { Action, State } from 'vuex-class';
+import EditUserForm from '~/components/admin/user/EditUserForm.vue';
+import DelButton from '~/components/admin/DelButton.vue';
 import Avatar from 'vue-avatar';
 
 @Component({
   components: {
+    EditUserForm,
+    DelButton,
     Avatar
+  },
+  notifications: {
+    bulkError: {
+      icon: 'fas fa-exclamation-triangle',
+      position: 'bottomLeft',
+      title: 'Bulk',
+      toastOnce: true,
+      type: 'error'
+    }
   }
 })
 export default class UserItems extends Vue {
@@ -120,6 +133,8 @@ export default class UserItems extends Vue {
 
   bulkSelected = [];
   bulkName = '';
+
+  bulkError: ({ message: string, timeout: number }) => void;
 
   get bulkList() {
     return [
@@ -166,12 +181,29 @@ export default class UserItems extends Vue {
     );
 
     if (isConfirm) {
-      await this.bulkAction({
+      this.$emit('setLoading');
+
+      const errors = await this.bulkAction({
         input: {
           itemSelected: this.bulkSelected,
           actionSelected: this.bulkName
         }
       });
+
+      this.$emit('unsetLoading');
+
+      if (!errors) {
+        errors.map(err => {
+          this.bulkError({
+            message: err.message,
+            timeout: 5000
+          });
+        })
+
+        return;
+      } else {
+        return this.$emit('reload');
+      }
     }
   }
 }
@@ -183,6 +215,7 @@ export default class UserItems extends Vue {
     margin-right: 10px;
     float: left;
     display: inline-block;
+    padding-top: 7px;
     img {
       border-radius: 30px !important;
     }

@@ -203,6 +203,13 @@ export class User extends BaseEntity {
         return name;
     }
 
+    public static getVerifyTypeList() {
+        return [
+            { name: 'Email', value: User.VERIFY_TYPE_EMAIL },
+            { name: 'Phone', value: User.VERIFY_TYPE_PHONE },
+        ];
+    }
+
     public getVerifyTypeName() {
         let name: string = '';
 

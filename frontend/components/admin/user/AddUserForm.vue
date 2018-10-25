@@ -1,6 +1,12 @@
 <template>
   <div>
-    <el-button type="text" icon="el-icon-plus" @click="visible = true">Add user</el-button>
+    <el-button
+      type="text"
+      icon="el-icon-plus"
+      @click="visible = true"
+      class="edit-button">
+      Add user
+    </el-button>
     <el-dialog
       ref="dialog"
       :visible.sync="visible"
@@ -113,9 +119,9 @@ export default class AddUserForm extends Vue {
   @Action('users/add') addAction;
   @State(state => state.users.formSource) formSource;
 
-  visible = false;
-  loading = false;
-  form = {
+  visible: boolean = false;
+  loading: boolean = false;
+  form: any = {
     fullName: ''
   };
 

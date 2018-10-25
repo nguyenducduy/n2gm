@@ -35,6 +35,11 @@ export const actions = {
               perPage: ${typeof query.limit !== "undefined" ? query.limit : 30},
               q: "${typeof query.q !== "undefined" ? query.q : ""}",
               groups: "${typeof query.groups !== "undefined" ? query.groups : ""}",
+              status: "${typeof query.status !== "undefined" ? query.status : ""}",
+              verifyType: "${typeof query.verifyType !== "undefined" ? query.verifyType : ""}",
+              isSuperUser: "${typeof query.isSuperUser !== "undefined" ? query.isSuperUser : ""}",
+              isStaff: "${typeof query.isStaff !== "undefined" ? query.isStaff : ""}",
+              isVerified: "${typeof query.isVerified !== "undefined" ? query.isVerified : ""}",
               sort: "${typeof query.sort !== "undefined" ? query.sort : "-id"}"
             }
           ) {
@@ -72,7 +77,9 @@ export const actions = {
       `
     });
 
-    return typeof response.errors === "undefined" ? commit("SET_DATA", response.data) : response.errors;
+    return typeof response.errors === "undefined"
+      ? commit("SET_DATA", response.data)
+      : response.errors;
   },
 
   async login_by_username({ commit }, formData) {
@@ -149,10 +156,10 @@ export const actions = {
         }
       `, variables: { input: input }
     });
-    console.log(response);
-    // return typeof response.errors === "undefined"
-    //   ? setToken(response.data.login.token)
-    //   : response.errors;
+
+    return typeof response.errors === "undefined"
+      ? true
+      : response.errors;
   },
 
   async get_form_source({ commit }) {
@@ -161,7 +168,8 @@ export const actions = {
         {
           getFormsource {
             groups,
-            status
+            status,
+            verifyTypes
           }
         }
       `

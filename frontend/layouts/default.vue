@@ -80,6 +80,16 @@ body {
     .el-form {
       .el-select {
         width: 100% !important;
+
+        .el-tag {
+          background-color: #00cec9;
+          color: #fff;
+
+          .el-icon-close {
+            background-color: #00cec9;
+            color: #fff;
+          }
+        }
       }
       .el-form-item__label {
         line-height: 0px;
@@ -113,6 +123,12 @@ body > .el-container {
 
   .panel-body {
     margin: 17px;
+
+    .el-table {
+      td {
+        padding: 6px 0;
+      }
+    }
   }
 
   .topbar {
