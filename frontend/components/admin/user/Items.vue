@@ -85,7 +85,7 @@
       <el-table-column class-name="td-operation" width="100" align="right">
         <template slot-scope="scope">
           <el-button-group class="operation">
-            <edit-user-form></edit-user-form>
+            <edit-user-form :id="scope.row.id"></edit-user-form>
             <del-button :id="scope.row.id" store="users"></del-button>
           </el-button-group>
         </template>

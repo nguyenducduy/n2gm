@@ -5,8 +5,7 @@ export const state = () => ({
   query: {},
   formSource: {},
   totalItems: 0,
-  recordPerPage: 0,
-  tableLoading: false
+  recordPerPage: 0
 });
 
 export const mutations = {
@@ -22,6 +21,11 @@ export const mutations = {
   ADD_DATA(state, response) {
     state.data.unshift(response);
   },
+  DELETE_DATA(state, id) {
+    const index = state.data.findIndex(item => item.id === id);
+    state.data.splice(index, 1);
+    state.totalItems = state.totalItems - 1;
+  }
 };
 
 export const actions = {
@@ -144,6 +148,81 @@ export const actions = {
       : response.errors;
   },
 
+  async get({ commit }, { id }) {
+    const response = await this.$axios.$post("/", {
+      query: `
+        {
+          getUser (
+            id: ${id}
+          ) {
+            id,
+            email,
+            fullName,
+            screenName,
+            avatar,
+            mobileNumber,
+            status,
+            isSuperUser,
+            isStaff,
+            isVerified,
+            verifyType,
+            isProfileUpdated,
+            oauthProvider,
+            groups {
+              id,
+              name,
+              screenName,
+              style
+            }
+          }
+        }
+      `
+    });
+
+    return typeof response.errors === "undefined"
+      ? response.data.getUser
+      : response.errors;
+  },
+
+  async update({ commit }, { id, input }) {
+    const response = await this.$axios.$post("/", {
+      query: `
+        mutation (
+          $id: Int!,
+          $input: JSON!
+        ) {
+          updatePoiInfo (
+            id: $id,
+            input: $input
+          ) {
+            type { id, name },
+            id,
+            name,
+            status,
+            similar,
+            number,
+            street,
+            ward { id, name},
+            district { id, name},
+            city { id, name},
+            lat,
+            lng,
+            website,
+            phoneNumber,
+            rating,
+            ggFullAddress,
+            notes { id },
+            dateCreated
+          }
+        }
+      `, variables: { id: id, input: input }
+    });
+
+    return typeof response.errors === "undefined"
+      ? commit("UPDATE_DATA", response.data.updatePoiInfo)
+      : response.errors;
+  },
+
   async bulk({ commit }, { input }) {
     const response = await this.$axios.$post("/", {
       query: `
@@ -177,6 +256,27 @@ export const actions = {
 
     return typeof response.errors === "undefined"
       ? commit('SET_FORM_SOURCE', response.data.getFormsource)
+      : response.errors;
+  },
+
+  async delete({ commit }, { id }) {
+    const response = await this.$axios.$post("/", {
+      query: `
+        mutation (
+          $id: Int!
+        ) {
+          deleteUser(
+            id: $id
+          )
+        }
+      `,
+      variables: {
+        id: id
+      }
+    });
+
+    return typeof response.errors === "undefined"
+      ? commit("DELETE_DATA", id)
       : response.errors;
   }
 };

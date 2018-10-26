@@ -152,7 +152,12 @@ export class UsersService {
 
     async findOne(id: number) {
         try {
-            return await this.userRepository.findOneOrFail(id);
+            return await this.userRepository.findOneOrFail({
+                where: {
+                    id: id
+                },
+                relations: ["groups"]
+            });
         } catch (error) {
             throw new UserException("user:notFound");
         }

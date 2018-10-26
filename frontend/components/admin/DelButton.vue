@@ -20,7 +20,8 @@
         <el-button
           size="mini"
           type="text"
-          @click="onConfirm">
+          @click="onConfirm"
+          :loading="loading">
           <span class="text-danger">
             {{ $t('default.msg.confirm') }}
           </span>
@@ -55,19 +56,42 @@ export default class DelButton extends Vue {
   @Prop() id: number;
   @Prop() store: string;
 
+  loading: boolean = false;
   visible: boolean = false;
 
   deleteSuccess: ({ message: string, timeout: number }) => void;
   deleteError: ({ message: string, timeout: number }) => void;
 
   async onConfirm() {
-    this.visible = true;
+    this.loading = true;
 
-    // const res = await this.$store.dispatch(`${this.store}/delete`, {
-    //   id: this.id
-    // });
+    const errors = await this.$store.dispatch(`${this.store}/delete`, {
+      id: this.id
+    });
 
+    if (typeof errors !== 'undefined') {
+      this.loading = false;
 
+      errors.map(err => {
+        this.deleteError({
+          message: err.message,
+          timeout: 5000
+        });
+      });
+
+      this.visible = false;
+
+      return;
+    } else {
+      this.loading = false;
+
+      this.deleteSuccess({
+        message: `User ID: ${this.id} deleted`,
+        timeout: 1000
+      });
+
+      this.visible = false;
+    }
   }
 
   onCancel() {
