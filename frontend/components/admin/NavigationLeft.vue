@@ -21,7 +21,7 @@
         </el-menu-item>
         <el-menu-item index="/admin/user/create">
           <i class="el-icon-fa-plus"></i>
-          {{ $t('default.create') }}
+          {{ $t('default.add') }}
         </el-menu-item>
       </el-submenu>
     </el-menu>

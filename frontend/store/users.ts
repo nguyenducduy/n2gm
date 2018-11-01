@@ -25,7 +25,11 @@ export const mutations = {
     const index = state.data.findIndex(item => item.id === id);
     state.data.splice(index, 1);
     state.totalItems = state.totalItems - 1;
-  }
+  },
+  UPDATE_DATA(state, response) {
+    const index = state.data.findIndex(item => item.id === response.id);
+    state.data.splice(index, 1, response);
+  },
 };
 
 export const actions = {
@@ -191,35 +195,38 @@ export const actions = {
           $id: Int!,
           $input: JSON!
         ) {
-          updatePoiInfo (
+          updateUser (
             id: $id,
             input: $input
           ) {
-            type { id, name },
             id,
-            name,
+            email,
+            fullName,
+            screenName,
+            avatar,
+            mobileNumber,
             status,
-            similar,
-            number,
-            street,
-            ward { id, name},
-            district { id, name},
-            city { id, name},
-            lat,
-            lng,
-            website,
-            phoneNumber,
-            rating,
-            ggFullAddress,
-            notes { id },
-            dateCreated
+            isSuperUser,
+            isStaff,
+            isVerified,
+            verifyType,
+            isProfileUpdated,
+            oauthProvider,
+            groups {
+              id,
+              name,
+              screenName,
+              style
+            },
+            dateCreated,
+            dateLastChangePassword
           }
         }
       `, variables: { id: id, input: input }
     });
 
     return typeof response.errors === "undefined"
-      ? commit("UPDATE_DATA", response.data.updatePoiInfo)
+      ? commit("UPDATE_DATA", response.data.updateUser)
       : response.errors;
   },
 

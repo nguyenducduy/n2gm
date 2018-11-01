@@ -3,14 +3,14 @@
     <el-aside class="filter-container">
       <el-form label-position="top" size="small">
         <el-form-item>
-          <el-input :placeholder="$t('form.search')"
+          <el-input :placeholder="$t('pages.admin.user.form.search')"
             v-model="form.q"
             @keyup.enter.native="onFilter"
             suffix-icon="el-icon-search"
             clearable>
           </el-input>
         </el-form-item>
-        <el-form-item :label="$t('form.group')">
+        <el-form-item :label="$t('pages.admin.user.form.group')">
           <el-select multiple v-model="form.groups" :placeholder="$t('default.all')">
             <el-option
               v-for="item in formSource.groups"
@@ -18,7 +18,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('form.status')">
+        <el-form-item :label="$t('pages.admin.user.form.status')">
           <el-select clearable v-model="form.status" :placeholder="$t('default.all')" class="is-focus">
             <el-option
               v-for="item in formSource.status"
@@ -26,7 +26,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('form.verifyType')">
+        <el-form-item :label="$t('pages.admin.user.form.verifyType')">
           <el-select clearable v-model="form.verifyType" :placeholder="$t('default.all')">
             <el-option
               v-for="item in formSource.verifyTypes"
@@ -39,7 +39,7 @@
             v-model="form.isSuperUser"
             :active-value="1"
             :inactive-value-value="3"
-            :active-text="$t('form.isSuperUser')">
+            :active-text="$t('pages.admin.user.form.isSuperUser')">
           </el-switch>
         </el-form-item>
         <el-form-item>
@@ -47,7 +47,7 @@
             v-model="form.isStaff"
             :active-value="1"
             :inactive-value-value="3"
-            :active-text="$t('form.isStaff')">
+            :active-text="$t('pages.admin.user.form.isStaff')">
           </el-switch>
         </el-form-item>
         <el-form-item>
@@ -55,7 +55,7 @@
             v-model="form.isVerified"
             :active-value="1"
             :inactive-value-value="3"
-            :active-text="$t('form.isVerified')">
+            :active-text="$t('pages.admin.user.form.isVerified')">
           </el-switch>
         </el-form-item>
         <el-form-item>
@@ -143,12 +143,12 @@ export default class UserIndexPage extends Vue {
 
   head() {
     return {
-      title: this.$t('title'),
+      title: this.$t('pages.admin.user.title'),
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.$t('title')
+          content: this.$t('pages.admin.user.title')
         }
       ]
     };

@@ -27,8 +27,10 @@
     "refresh": "Refresh",
     "cancel": "Cancel",
     "warning": "Warning",
+    "active": "Active",
+    "block": "Blocked",
     "msg": {
-      "deleteConfirm": "Are you sure to delete?",
+      "deleteConfirm": "Are you sure?",
       "confirm": "Yes",
       "cancel": "No",
       "deleteSuccess": "successfully",
@@ -45,7 +47,34 @@
       "user": {
         "title": "Users",
         "form": {
-          "fullName": " Full name"
+          "fullName": "Full name",
+          "sreenName": "Screen name",
+          "mobileNumber": "Mobile Number",
+          "password": "Password",
+          "email": "Email",
+          "search": "Search",
+          "group": "Group",
+          "status": "Status",
+          "verifyType": "Verify Type",
+          "isSuperUser": "Is SuperUser",
+          "isStaff": "Is Staff",
+          "isVerified": "Is Verified",
+          "groupName": "Group name",
+          "groupScreenName": "Group screen name",
+          "groupStyle": "Group style"
+        },
+        "label": {
+          "name": "Name",
+          "mobileNumber": "Mobile Number",
+          "oauthProvider": "Oauth Provider",
+          "group": "Group",
+          "status": "Status",
+          "verifyType": "Verify Type",
+          "isSuperUser": "Is SuperUser?",
+          "isStaff": "Is Staff?",
+          "isProfileUpdated": "Is Profile Updated?",
+          "dateCreated": "Date created",
+          "dateLastChangePassword": "Date last change password"
         }
       }
     }

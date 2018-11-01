@@ -5,6 +5,7 @@ import { User, Group } from "../../models";
 import { UserException } from "../../shared/filters/user.exception";
 import { plainToClass } from 'class-transformer';
 import { ValidateException } from "../../shared/filters/validate.exception";
+import { throwError } from "rxjs";
 
 @Injectable()
 export class UsersService {
@@ -200,6 +201,25 @@ export class UsersService {
             let myUser = await this.userRepository.findOneOrFail(id);
 
             myUser.fullName = formData.fullName;
+            myUser.screenName = formData.screenName;
+            myUser.status = formData.status;
+            myUser.mobileNumber = formData.mobileNumber;
+            myUser.isSuperUser = formData.isSuperUser;
+            myUser.isSuperUser = formData.isSuperUser;
+            myUser.isStaff = formData.isStaff;
+
+            let myGroups: Group[] = [];
+            if (formData.groups.length > 0) {
+                await Promise.all(
+                    formData.groups.map(async groupId => {
+                        const myGroup = await this.groupRepository.findOneOrFail(groupId);
+
+                        myGroups.push(plainToClass(Group, myGroup));
+                    })
+                );
+
+                myUser.groups = myGroups;
+            }
 
             return await this.userRepository.save(myUser);
         } catch (error) {

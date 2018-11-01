@@ -24,21 +24,38 @@
           label-position="top"
           size="small"
           :model="form"
-
+          @submit.native.prevent
           ref="addUserForm">
           <el-col :md="12">
-            <el-form-item :label="$t('pages.admin.user.form.fullName')">
+            <el-form-item :label="$t('pages.admin.user.form.fullName')"
+              prop="fullName"
+              :rules="[
+                { required: true, message: $t('msg.nameIsRequired'), trigger: 'blur' }
+              ]">
               <el-input type="text" v-model="form.fullName"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('pages.admin.user.form.email')">
+            <el-form-item :label="$t('pages.admin.user.form.email')"
+              prop="email"
+              :rules="[
+                { required: true, message: this.$t('msg.emailIsRequired'), trigger: 'blur' },
+                { type: 'email', message: this.$t('msg.emailInvalid'), trigger: 'blur,change' }
+              ]">
               <el-input type="text" v-model="form.email"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('pages.admin.user.form.password')">
+            <el-form-item :label="$t('pages.admin.user.form.password')"
+              prop="password"
+              :rules="[
+                { required: true, message: this.$t('msg.passwordIsRequired'), trigger: 'blur' }
+              ]">
               <el-input type="password" v-model="form.password"></el-input>
             </el-form-item>
           </el-col>
           <el-col :md="12">
-            <el-form-item :label="$t('form.group')">
+            <el-form-item :label="$t('pages.admin.user.form.group')"
+              prop="groups"
+              :rules="[
+                { required: true, message: this.$t('msg.groupIsRequired'), trigger: 'change' }
+              ]">
               <el-select
                 multiple
                 v-model="form.groups"
@@ -50,7 +67,11 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item :label="$t('form.status')">
+            <el-form-item :label="$t('pages.admin.user.form.status')"
+              prop="status"
+              :rules="[
+                { required: true, message: this.$t('msg.statusIsRequired'), trigger: 'change' }
+              ]">
               <el-select
                 clearable
                 v-model="form.status"
@@ -62,7 +83,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item>
+            <el-form-item prop="isSuperUser">
               <el-switch
                 v-model="form.isSuperUser"
                 active-text="Is SuperUser"
@@ -70,7 +91,7 @@
                 inactive-value="3">
               </el-switch>
             </el-form-item>
-            <el-form-item>
+            <el-form-item prop="isStaff">
               <el-switch
                 v-model="form.isStaff"
                 active-text="Is Staff"
@@ -128,81 +149,47 @@ export default class AddUserForm extends Vue {
   addSuccess: ({ message: string, timeout: number }) => void;
   addError: ({ message: string, timeout: number }) => void;
 
-  get rules() {
-    return {
-      fullName: [
-        {
-          required: true,
-          message: this.$t('msg.nameIsRequired'),
-          trigger: 'blur'
-        }
-      ],
-      email: [
-        {
-          required: true,
-          message: this.$t('msg.emailIsRequired'),
-          trigger: 'blur'
-        },
-        {
-          type: 'email',
-          message: this.$t('msg.emailInvalid'),
-          trigger: 'blur,change'
-        }
-      ],
-      password: [
-        {
-          required: true,
-          message: this.$t('msg.passwordIsRequired'),
-          trigger: 'blur'
-        }
-      ],
-      groups: [
-        {
-          required: true,
-          message: this.$t('msg.groupIsRequired'),
-          trigger: 'change'
-        }
-      ],
-      status: [
-        {
-          required: true,
-          message: this.$t('msg.statusIsRequired'),
-          trigger: 'change'
-        }
-      ]
-    };
+  $refs: {
+    addUserForm: HTMLFormElement
   }
 
   async onSubmit() {
-    this.loading = true;
+    this.$refs.addUserForm.validate(async valid => {
+      if (valid) {
+        this.loading = true;
 
-    const errors = await this.addAction({ input: this.form });
+        const errors = await this.addAction({ input: this.form });
 
-    if (typeof errors !== 'undefined') {
-      this.loading = false;
+        if (typeof errors !== 'undefined') {
+          this.loading = false;
 
-      errors.map(err => {
-        this.addError({
-          message: err.message,
-          timeout: 5000
-        });
-      })
+          errors.map(err => {
+            this.addError({
+              message: err.message,
+              timeout: 5000
+            });
+          })
 
-      return;
-    } else {
-      this.loading = false;
+          return;
+        } else {
+          this.loading = false;
 
-      this.addSuccess({
-        message: `${this.form.fullName}`,
-        timeout: 1000
-      });
+          this.addSuccess({
+            message: `${this.form.fullName}`,
+            timeout: 1000
+          });
 
-      this.visible = false;
-    }
+          this.visible = false;
+        }
+      } else {
+        return false;
+      }
+    });
   }
 
   onClose() {
     this.visible = false;
+    this.$refs.addUserForm.resetFields();
   }
 }
 </script>

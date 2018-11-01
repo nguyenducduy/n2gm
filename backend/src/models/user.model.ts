@@ -29,7 +29,7 @@ export class User extends BaseEntity {
     @Column({ name: 'u_email' })
     @IsNotEmpty({ message: 'Email is not empty' })
     @IsEmail()
-    @UserExisted({ message: 'User already existed.' })
+    // @UserExisted({ message: 'User already existed.' })
     public email: string = '';
 
     @Column({ name: 'u_password' })

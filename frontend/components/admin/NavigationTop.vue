@@ -58,6 +58,7 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';
 import { Getter } from 'vuex-class';
+import { setLocale } from '~/helpers/locale';
 
 @Component
 export default class NavigationTop extends Vue {
@@ -68,8 +69,8 @@ export default class NavigationTop extends Vue {
   }
 
   changeLocale(locale) {
-    // setLocale(locale)
-    // return window.location.reload()
+    setLocale(locale)
+    return window.location.reload()
   }
 
 }

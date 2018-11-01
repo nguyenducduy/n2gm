@@ -8,7 +8,7 @@
       v-loading.fullscreen.lock="loadingState"
       row-key="id">
       <el-table-column type="selection"></el-table-column>
-      <el-table-column :label="$t('pages.admin.users.label.name')"
+      <el-table-column :label="$t('pages.admin.user.label.name')"
         :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <div class="avatar">
@@ -24,15 +24,15 @@
       </el-table-column>
       <el-table-column
         prop="mobileNumber"
-        :label="$t('pages.admin.users.label.mobileNumber')"
+        :label="$t('pages.admin.user.label.mobileNumber')"
         width="130"
         align="center"></el-table-column>
       <el-table-column
         prop="oauthProvider"
-        :label="$t('pages.admin.users.label.oauthProvider')"
+        :label="$t('pages.admin.user.label.oauthProvider')"
         width="130"
         align="center"></el-table-column>
-      <el-table-column :label="$t('label.group')" width="120" align="center">
+      <el-table-column :label="$t('pages.admin.user.label.group')" width="120" align="center">
         <template slot-scope="scope">
           <el-tag
             v-for="(group, index) in scope.row.groups" :key="index"
@@ -42,41 +42,41 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.status')" width="100" align="center">
+      <el-table-column :label="$t('pages.admin.user.label.status')" width="100" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status.style" size="mini">
             {{ scope.row.status.label }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.verifyType')" width="100" align="center">
+      <el-table-column :label="$t('pages.admin.user.label.verifyType')" width="100" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.verifyType.style" size="mini">
             {{ scope.row.verifyType.label }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.isSuperUser')" align="center" width="50">
+      <el-table-column :label="$t('pages.admin.user.label.isSuperUser')" align="center" width="50">
         <template slot-scope="scope">
           <i :class="'el-icon-' + (scope.row.isSuperUser === 1 ? 'check' : 'close')"></i>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.isStaff')" align="center" width="50">
+      <el-table-column :label="$t('pages.admin.user.label.isStaff')" align="center" width="50">
         <template slot-scope="scope">
           <i :class="'el-icon-' + (scope.row.isStaff === 1 ? 'check' : 'close')"></i>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.isProfileUpdated')" align="center" width="50">
+      <el-table-column :label="$t('pages.admin.user.label.isProfileUpdated')" align="center" width="50">
         <template slot-scope="scope">
           <i :class="'el-icon-' + (scope.row.isProfileUpdated === 1 ? 'check' : 'close')"></i>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.dateCreated')" width="100" align="center">
+      <el-table-column :label="$t('pages.admin.user.label.dateCreated')" width="100" align="center">
         <template slot-scope="scope">
           <small>{{ scope.row.dateCreated.readable }}</small>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('label.dateLastChangePassword')" width="100" align="center">
+      <el-table-column :label="$t('pages.admin.user.label.dateLastChangePassword')" width="100" align="center">
         <template slot-scope="scope">
           <small v-if="scope.row.dateLastChangePassword.timestamp > 0">{{ scope.row.dateLastChangePassword.readable }}</small>
           <small v-else><i class="el-icon-close"></i></small>
@@ -138,9 +138,9 @@ export default class UserItems extends Vue {
 
   get bulkList() {
     return [
-      { value: 'delete', label: this.$t('label.delete') },
-      { value: 'active', label: this.$t('label.active') },
-      { value: 'block', label: this.$t('label.block') }
+      { value: 'delete', label: this.$t('default.delete') },
+      { value: 'active', label: this.$t('default.active') },
+      { value: 'block', label: this.$t('default.block') }
     ];
   }
 

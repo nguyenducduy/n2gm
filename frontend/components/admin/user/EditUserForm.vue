@@ -15,29 +15,48 @@
       lock-scroll
       width="35%">
       <template slot="title">
-        <h3><i class="el-icon-fa-user-plus"></i> {{ $t('edit-user-form') }}</h3>
+        <h3 style="text-align: left;">
+          {{ $t('edit-user-form') }}
+        </h3>
       </template>
-      <el-row :gutter="30">
+      <el-row :gutter="30" style="text-align: left;">
         <el-form
           autoComplete="on"
           label-position="top"
           size="small"
           :model="form"
-
+          @submit.native.prevent
           ref="editUserForm">
           <el-col :md="12">
-            <el-form-item :label="$t('pages.admin.user.form.fullName')">
+            <el-form-item :label="$t('pages.admin.user.form.fullName')"
+              prop="fullName"
+              :rules="[
+                { required: true, message: $t('msg.nameIsRequired'), trigger: 'blur' }
+              ]">
               <el-input type="text" v-model="form.fullName"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('pages.admin.user.form.screenName')">
+            <el-form-item :label="$t('pages.admin.user.form.screenName')"
+              prop="email"
+              :rules="[
+                { required: true, message: this.$t('msg.emailIsRequired'), trigger: 'blur' },
+                { type: 'email', message: this.$t('msg.emailInvalid'), trigger: 'blur,change' }
+              ]">
               <el-input type="text" v-model="form.screenName"></el-input>
+            </el-form-item>
+            <el-form-item :label="$t('pages.admin.user.form.mobileNumber')"
+              prop="mobileNumber">
+              <el-input type="text" v-model="form.mobileNumber"></el-input>
             </el-form-item>
             <el-form-item :label="$t('pages.admin.user.form.email')">
               <el-input type="text" v-model="form.email" disabled=""></el-input>
             </el-form-item>
           </el-col>
           <el-col :md="12">
-            <el-form-item :label="$t('form.group')">
+            <el-form-item :label="$t('pages.admin.user.form.group')"
+              prop="groups"
+              :rules="[
+                { required: true, message: this.$t('msg.groupIsRequired'), trigger: 'change' }
+              ]">
               <el-select
                 multiple
                 v-model="form.groups"
@@ -49,7 +68,11 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item :label="$t('form.status')">
+            <el-form-item :label="$t('pages.admin.user.form.status')"
+              prop="status"
+              :rules="[
+                { required: true, message: this.$t('msg.statusIsRequired'), trigger: 'change' }
+              ]">
               <el-select
                 clearable
                 v-model="form.status"
@@ -61,7 +84,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item>
+            <el-form-item prop="isSuperUser">
               <el-switch
                 v-model="form.isSuperUser"
                 active-text="Is SuperUser"
@@ -69,7 +92,7 @@
                 inactive-value="3">
               </el-switch>
             </el-form-item>
-            <el-form-item>
+            <el-form-item prop="isStaff">
               <el-switch
                 v-model="form.isStaff"
                 active-text="Is Staff"
@@ -129,8 +152,45 @@ export default class EditUserForm extends Vue {
   editSuccess: ({ message: string, timeout: number }) => void;
   editError: ({ message: string, timeout: number }) => void;
 
-  async onSubmit() {
+  $refs: {
+    editUserForm: HTMLFormElement
+  }
 
+  async onSubmit() {
+    this.$refs.editUserForm.validate(async valid => {
+      if (valid) {
+        this.loading = true;
+
+        const errors = await this.updateAction({
+          id: this.id,
+          input: this.form
+        });
+
+        if (typeof errors !== 'undefined') {
+          this.loading = false;
+
+          errors.map(err => {
+            this.editError({
+              message: err.message,
+              timeout: 5000
+            });
+          })
+
+          return;
+        } else {
+          this.loading = false;
+
+          this.editSuccess({
+            message: `${this.form.fullName}`,
+            timeout: 1000
+          });
+
+          this.visible = false;
+        }
+      } else {
+        return false;
+      }
+    });
   }
 
   async onOpen() {
@@ -140,10 +200,15 @@ export default class EditUserForm extends Vue {
       fullName: myUser.fullName,
       screenName: myUser.screenName,
       email: myUser.email,
-      isSuperUser: myUser.isSuperUser,
-      isStaff: myUser.isStaff,
-      status: myUser.status.value
+      isSuperUser: myUser.isSuperUser.toString(),
+      isStaff: myUser.isStaff.toString(),
+      status: myUser.status.value,
+      groups: []
     };
+
+    myUser.groups.map(group => {
+      this.form['groups'].push(group.id);
+    });
   }
 
   onClose() {

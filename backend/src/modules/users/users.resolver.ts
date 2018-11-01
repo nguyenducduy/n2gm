@@ -93,6 +93,7 @@ export class UsersResolver {
     @Mutation("updateUser")
     @Roles("isSuperUser")
     @Permissions("update.user")
+    @UseInterceptors(new UserInterceptor())
     async updateUser(_: any, { id, input }) {
         try {
             return await this.usersService.update(id, input);
