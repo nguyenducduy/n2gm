@@ -137,7 +137,7 @@ export class UsersService {
                 case 'block':
                     items.map(async user => {
                         await queryRunner.manager.update(User, user.id, { status: User.STATUS_BLOCKED });
-                    });
+                      });
 
                     await queryRunner.commitTransaction();
                     return userIds;
