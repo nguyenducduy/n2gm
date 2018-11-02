@@ -77,14 +77,14 @@ export class UsersResolver {
         }
     }
 
-    @Mutation("createUser")
+    @Mutation("addUser")
     @Roles("isSuperUser")
     @Permissions("add.user")
     // @UseInterceptors(RavenInterceptor())
     @UseInterceptors(new UserInterceptor())
-    async createUser(_: any, { input }) {
+    async addUser(_: any, { input }) {
         try {
-            return await this.usersService.create(input);
+            return await this.usersService.add(input);
         } catch (error) {
             throw error;
         }
@@ -133,7 +133,7 @@ export class UsersResolver {
                 .query(
                     'multi_match',
                     'fields',
-                    [ 'u_full_name', 'u_email'],
+                    [ 'u_full_name', 'u_email', 'u_screen_name'],
                     {
                         query: q.trim(),
                         fuzziness: "AUTO",
@@ -182,5 +182,27 @@ export class UsersResolver {
                 .on("error", error => reject(error))
                 .on("finish", () => resolve({ id, path }))
         );
+    }
+
+    @Mutation("addGroup")
+    @Roles("isSuperUser")
+    @Permissions("add.group")
+    async addGroup(_: any, { input }) {
+        try {
+            return await this.usersService.addGroup(input);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @Mutation("updateGroup")
+    @Roles("isSuperUser")
+    @Permissions("update.group")
+    async updateGroup(_: any, { id, input }) {
+        try {
+            return await this.usersService.updateGroup(id, input);
+        } catch (error) {
+            throw error;
+        }
     }
 }

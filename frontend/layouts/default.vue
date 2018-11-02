@@ -81,15 +81,15 @@ body {
       .el-select {
         width: 100% !important;
 
-        .el-tag {
-          background-color: #00cec9;
-          color: #fff;
+        // .el-tag {
+        //   background-color: #00cec9;
+        //   color: #fff;
 
-          .el-icon-close {
-            background-color: #00cec9;
-            color: #fff;
-          }
-        }
+        //   .el-icon-close {
+        //     background-color: #00cec9;
+        //     color: #fff;
+        //   }
+        // }
       }
       .el-form-item__label {
         line-height: 0px;

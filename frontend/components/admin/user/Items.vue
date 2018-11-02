@@ -5,6 +5,7 @@
       :data="users"
       style="width: 100%"
       @selection-change="onSelectionChange"
+      @sort-change="onSortChange"
       v-loading.fullscreen.lock="loadingState"
       row-key="id">
       <el-table-column type="selection"></el-table-column>
@@ -23,16 +24,17 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="mobileNumber"
         :label="$t('pages.admin.user.label.mobileNumber')"
         width="130"
         align="center"></el-table-column>
       <el-table-column
-        prop="oauthProvider"
         :label="$t('pages.admin.user.label.oauthProvider')"
         width="130"
         align="center"></el-table-column>
-      <el-table-column :label="$t('pages.admin.user.label.group')" width="120" align="center">
+      <el-table-column
+        :label="$t('pages.admin.user.label.group')"
+        width="120"
+        align="center">
         <template slot-scope="scope">
           <el-tag
             v-for="(group, index) in scope.row.groups" :key="index"
@@ -42,41 +44,75 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('pages.admin.user.label.status')" width="100" align="center">
+      <el-table-column :label="$t('pages.admin.user.label.status')"
+        align="center"
+        width="100"
+        prop="status"
+        sortable="custom">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status.style" size="mini">
             {{ scope.row.status.label }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('pages.admin.user.label.verifyType')" width="100" align="center">
+      <el-table-column
+        :label="$t('pages.admin.user.label.verifyType')"
+        width="100"
+        align="center"
+        prop="verifyType"
+        sortable="custom">
         <template slot-scope="scope">
           <el-tag :type="scope.row.verifyType.style" size="mini">
             {{ scope.row.verifyType.label }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('pages.admin.user.label.isSuperUser')" align="center" width="50">
+      <el-table-column
+        :label="$t('pages.admin.user.label.isSuperUser')"
+        align="center"
+        width="50"
+        prop="isSuperUser"
+        sortable="custom">
         <template slot-scope="scope">
           <i :class="'el-icon-' + (scope.row.isSuperUser === 1 ? 'check' : 'close')"></i>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('pages.admin.user.label.isStaff')" align="center" width="50">
+      <el-table-column
+        :label="$t('pages.admin.user.label.isStaff')"
+        align="center"
+        width="50"
+        prop="isStaff"
+        sortable="custom">
         <template slot-scope="scope">
           <i :class="'el-icon-' + (scope.row.isStaff === 1 ? 'check' : 'close')"></i>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('pages.admin.user.label.isProfileUpdated')" align="center" width="50">
+      <el-table-column
+        :label="$t('pages.admin.user.label.isProfileUpdated')"
+        align="center"
+        width="50"
+        prop="isProfileUpdated"
+        sortable="custom">
         <template slot-scope="scope">
           <i :class="'el-icon-' + (scope.row.isProfileUpdated === 1 ? 'check' : 'close')"></i>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('pages.admin.user.label.dateCreated')" width="100" align="center">
+      <el-table-column
+        :label="$t('pages.admin.user.label.dateCreated')"
+        align="center"
+        width="100"
+        prop="dateCreated"
+        sortable="custom">
         <template slot-scope="scope">
           <small>{{ scope.row.dateCreated.readable }}</small>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('pages.admin.user.label.dateLastChangePassword')" width="100" align="center">
+      <el-table-column
+        :label="$t('pages.admin.user.label.dateLastChangePassword')"
+        width="100"
+        align="center"
+        prop="dateLastChangePassword"
+        sortable="custom">
         <template slot-scope="scope">
           <small v-if="scope.row.dateLastChangePassword.timestamp > 0">{{ scope.row.dateLastChangePassword.readable }}</small>
           <small v-else><i class="el-icon-close"></i></small>
@@ -128,6 +164,7 @@ import Avatar from 'vue-avatar';
 })
 export default class UserItems extends Vue {
   @Prop() loadingState: boolean;
+  @Prop() defaultSort: any;
   @Action('users/bulk') bulkAction;
   @State(state => state.users.data) users;
 
@@ -145,6 +182,10 @@ export default class UserItems extends Vue {
   }
 
   onSelectionChange(item) { this.bulkSelected = item; }
+
+  onSortChange({ prop, order }) {
+    this.$emit('sort', { prop, order });
+  }
 
   async onBulkSubmit() {
     if (this.bulkSelected.length === 0) {

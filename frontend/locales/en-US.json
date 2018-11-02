@@ -46,6 +46,11 @@
     "admin": {
       "user": {
         "title": "Users",
+        "navigation": {
+          "list": "All users",
+          "add": "Add new user",
+          "list-group": "All groups & permissions"
+        },
         "form": {
           "fullName": "Full name",
           "sreenName": "Screen name",
@@ -56,9 +61,9 @@
           "group": "Group",
           "status": "Status",
           "verifyType": "Verify Type",
-          "isSuperUser": "Is SuperUser",
-          "isStaff": "Is Staff",
-          "isVerified": "Is Verified",
+          "isSuperUser": "SuperUser?",
+          "isStaff": "Staff?",
+          "isVerified": "Verified?",
           "groupName": "Group name",
           "groupScreenName": "Group screen name",
           "groupStyle": "Group style"
@@ -70,11 +75,13 @@
           "group": "Group",
           "status": "Status",
           "verifyType": "Verify Type",
-          "isSuperUser": "Is SuperUser?",
-          "isStaff": "Is Staff?",
-          "isProfileUpdated": "Is Profile Updated?",
+          "isSuperUser": "SuperUser?",
+          "isStaff": "Staff?",
+          "isProfileUpdated": "Profile Updated?",
           "dateCreated": "Date created",
-          "dateLastChangePassword": "Date last change password"
+          "dateLastChangePassword": "Date last change password",
+          "addGroup": "Add group",
+          "addUser": "Add user"
         }
       }
     }

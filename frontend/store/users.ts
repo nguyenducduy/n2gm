@@ -30,6 +30,9 @@ export const mutations = {
     const index = state.data.findIndex(item => item.id === response.id);
     state.data.splice(index, 1, response);
   },
+  ADD_GROUP(state, response) {
+    state.formSource.groups.push(response);
+  }
 };
 
 export const actions = {
@@ -118,7 +121,7 @@ export const actions = {
         mutation (
           $input: JSON!
         ) {
-          createUser (
+          addUser (
             input: $input
           ) {
             id,
@@ -148,7 +151,7 @@ export const actions = {
     });
 
     return typeof response.errors === "undefined"
-      ? commit("ADD_DATA", response.data.createUser)
+      ? commit("ADD_DATA", response.data.addUser)
       : response.errors;
   },
 
@@ -272,7 +275,7 @@ export const actions = {
         mutation (
           $id: Int!
         ) {
-          deleteUser(
+          deleteUser (
             id: $id
           )
         }
@@ -284,6 +287,29 @@ export const actions = {
 
     return typeof response.errors === "undefined"
       ? commit("DELETE_DATA", id)
+      : response.errors;
+  },
+
+  async add_group({ commit }, { input }) {
+    const response = await this.$axios.$post("/", {
+      query: `
+        mutation (
+          $input: JSON!
+        ) {
+          addGroup (
+            input: $input
+          ) {
+            id,
+            name,
+            screenName,
+            style
+          }
+        }
+      `, variables: { input: input }
+    });
+
+    return typeof response.errors === "undefined"
+      ? commit("ADD_GROUP", response.data.addGroup)
       : response.errors;
   }
 };

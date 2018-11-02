@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-button type="text" icon="el-icon-plus" @click="visible = true">Add group</el-button>
+    <el-button type="text" icon="el-icon-plus" @click="visible = true">
+      {{ $t('pages.admin.user.label.addGroup') }}
+    </el-button>
     <el-dialog
       ref="dialog"
       :visible.sync="visible"
@@ -10,7 +12,7 @@
       lock-scroll
       width="25%">
       <template slot="title">
-        <h3><i class="el-icon-fa-users"></i> {{ $t('add-group-form') }}</h3>
+        <h3><i class="el-icon-fa-users"></i> {{ $t('pages.admin.user.label.addGroup') }}</h3>
       </template>
       <el-row :gutter="30">
         <el-form
@@ -67,14 +69,12 @@ import { Action, State } from 'vuex-class';
   }
 })
 export default class AddGroupForm extends Vue {
-  @Action('users/add') addAction;
+  @Action('users/add_group') addGroupAction;
   @State(state => state.users.formSource) formSource;
 
-  visible = false;
-  loading = false;
-  form = {
-    fullName: ''
-  };
+  visible: boolean = false;
+  loading: boolean = false;
+  form: any = {};
 
   addSuccess: ({ message: string, timeout: number }) => void;
   addError: ({ message: string, timeout: number }) => void;
@@ -82,7 +82,7 @@ export default class AddGroupForm extends Vue {
   async onSubmit() {
     this.loading = true;
 
-    const errors = await this.addAction({ input: this.form });
+    const errors = await this.addGroupAction({ input: this.form });
 
     if (typeof errors !== 'undefined') {
       this.loading = false;

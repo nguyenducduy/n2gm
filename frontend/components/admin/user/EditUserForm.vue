@@ -87,7 +87,7 @@
             <el-form-item prop="isSuperUser">
               <el-switch
                 v-model="form.isSuperUser"
-                active-text="Is SuperUser"
+                :active-text="$t('pages.admin.user.label.isSuperUser')"
                 active-value="1"
                 inactive-value="3">
               </el-switch>
@@ -95,7 +95,7 @@
             <el-form-item prop="isStaff">
               <el-switch
                 v-model="form.isStaff"
-                active-text="Is Staff"
+                :active-text="$t('pages.admin.user.label.isStaff')"
                 active-value="1"
                 inactive-value="3">
               </el-switch>

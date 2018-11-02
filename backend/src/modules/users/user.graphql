@@ -50,8 +50,11 @@ type Query {
 
 type Mutation {
   bulkUsers(input: JSON!): [Int]
-  createUser(input: JSON!): User!
+  addUser(input: JSON!): User!
   updateUser(id: Int!, input: JSON!): User!
   deleteUser(id: Int!): Boolean!
   uploadAvatar(file: Upload): File!
+  addGroup(input: JSON!): Group
+  updateGroup(id: Int!, input: JSON!): Group!
+  deleteGroup(id: Int!): Boolean!
 }

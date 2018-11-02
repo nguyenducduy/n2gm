@@ -74,7 +74,6 @@
               <span class="total-items">({{ totalItems }})</span>
             </el-col>
             <el-col :md="10" class="pagination-container">
-              <add-group-form class="add-btn-form"/>
               <add-user-form class="add-btn-form"/>
               <pagination
                 :totalItems="totalItems"
@@ -89,7 +88,8 @@
                   :loadingState="pageLoading"
                   @setLoading="setLoading"
                   @unsetLoading="unsetLoading"
-                  @reload="initData">
+                  @reload="initData"
+                  @sort="onSort">
                 </user-items>
               </div>
               <div class="pagination-bottom">
@@ -113,7 +113,6 @@ import { Action, State } from 'vuex-class';
 import Breadcrumb from '~/components/admin/Breadcrumb.vue';
 import Pagination from '~/components/admin/Pagination.vue';
 import AddUserForm from '~/components/admin/user/AddUserForm.vue';
-import AddGroupForm from '~/components/admin/user/AddGroupForm.vue';
 import UserItems from '~/components/admin/user/Items.vue';
 const querystring = require('querystring');
 
@@ -122,7 +121,6 @@ const querystring = require('querystring');
     Breadcrumb,
     Pagination,
     AddUserForm,
-    AddGroupForm,
     UserItems
   },
   // middleware: ['authenticated']
@@ -163,6 +161,26 @@ export default class UserIndexPage extends Vue {
     return this.$router.push(pageUrl);
   }
 
+  onSort(context) {
+    let orderString = '';
+    switch (context.order) {
+      case 'descending':
+        orderString = '-' + context.prop;
+        break;
+      case 'ascending':
+        orderString = context.prop;
+        break;
+    };
+
+    this.query.page = 1;
+
+    const pageUrl = `?${querystring.stringify(
+      { sort: orderString }
+    )}&${querystring.stringify(this.query)}`;
+
+    return this.$router.push(pageUrl);
+  }
+
   onReset() {
     return this.$router.push('/admin/user');
   }
@@ -192,7 +210,8 @@ export default class UserIndexPage extends Vue {
       groups: [],
       isSuperUser: parseInt(this.$route.query.isSuperUser) || null,
       isStaff: parseInt(this.$route.query.isStaff) || null,
-      isVerified: parseInt(this.$route.query.isVerified) || null
+      isVerified: parseInt(this.$route.query.isVerified) || null,
+      sort: this.$route.query.sort || null
     };
 
     // map groups because it's multiple selected

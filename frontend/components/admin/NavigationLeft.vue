@@ -17,11 +17,11 @@
         </template>
         <el-menu-item index="/admin/user">
           <i class="el-icon-fa-navicon"></i>
-          {{ $t('default.list') }}
+          {{ $t('pages.admin.user.navigation.list') }}
         </el-menu-item>
-        <el-menu-item index="/admin/user/create">
-          <i class="el-icon-fa-plus"></i>
-          {{ $t('default.add') }}
+        <el-menu-item index="/admin/group">
+          <i class="el-icon-fa-navicon"></i>
+          {{ $t('pages.admin.user.navigation.list-group') }}
         </el-menu-item>
       </el-submenu>
     </el-menu>

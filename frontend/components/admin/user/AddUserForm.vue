@@ -5,7 +5,7 @@
       icon="el-icon-plus"
       @click="visible = true"
       class="edit-button">
-      Add user
+      {{ $t('pages.admin.user.label.addUser') }}
     </el-button>
     <el-dialog
       ref="dialog"
@@ -16,7 +16,7 @@
       lock-scroll
       width="35%">
       <template slot="title">
-        <h3><i class="el-icon-fa-user-plus"></i> {{ $t('add-user-form') }}</h3>
+        <h3><i class="el-icon-fa-user-plus"></i> {{ $t('pages.admin.user.label.addUser') }}</h3>
       </template>
       <el-row :gutter="30">
         <el-form
@@ -86,7 +86,7 @@
             <el-form-item prop="isSuperUser">
               <el-switch
                 v-model="form.isSuperUser"
-                active-text="Is SuperUser"
+                :active-text="$t('pages.admin.user.label.isSuperUser')"
                 active-value="1"
                 inactive-value="3">
               </el-switch>
@@ -94,7 +94,7 @@
             <el-form-item prop="isStaff">
               <el-switch
                 v-model="form.isStaff"
-                active-text="Is Staff"
+                :active-text="$t('pages.admin.user.label.isStaff')"
                 active-value="1"
                 inactive-value="3">
               </el-switch>
