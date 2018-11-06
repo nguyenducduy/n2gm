@@ -41,7 +41,7 @@ export class Group {
     })
     users: User[];
 
-    @ManyToMany(type => Permission, { cascade: ['remove'] })
+    @ManyToMany(type => Permission)
     @JoinTable({
         name: 'rel_group_permission',
         joinColumn: {

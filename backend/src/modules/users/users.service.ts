@@ -5,7 +5,6 @@ import { User, Group } from "../../models";
 import { UserException } from "../../shared/filters/user.exception";
 import { plainToClass } from 'class-transformer';
 import { ValidateException } from "../../shared/filters/validate.exception";
-import { throwError } from "rxjs";
 
 @Injectable()
 export class UsersService {
@@ -98,7 +97,7 @@ export class UsersService {
             objects = await qb.getManyAndCount();
 
             return {
-                users: objects[0],
+                items: objects[0],
                 meta: {
                     curPage: options.curPage,
                     perPage: options.perPage,
@@ -250,59 +249,6 @@ export class UsersService {
             return output;
         } catch (error) {
             throw new UserException("user:formsource:fail");
-        }
-    }
-
-    async findOneGroup(id: number) {
-        try {
-            return await this.groupRepository.findOneOrFail({
-                where: {
-                    id: id
-                },
-                relations: ["permissions"]
-            });
-        } catch (error) {
-            throw new UserException("group:notFound");
-        }
-    }
-
-    async addGroup(item: Group) {
-        try {
-            const myGroup = this.groupRepository.create(item);
-            return await this.groupRepository.save(myGroup);
-        } catch (error) {
-            if (error instanceof ValidateException) {
-                throw error;
-            }
-
-            throw new UserException("group:create:fail");
-        }
-    }
-
-    async updateGroup(id: number, formData: any) {
-        try {
-            let myGroup = await this.groupRepository.findOneOrFail(id);
-
-            myGroup.name = formData.name;
-            myGroup.screenName = formData.fullName;
-            myGroup.style = formData.style;
-
-            return await this.groupRepository.save(myGroup);
-        } catch (error) {
-            if (error instanceof ValidateException) {
-                throw error;
-            }
-
-            throw new UserException("group:update:fail");
-        }
-    }
-
-    async deleteGroup(id: number) {
-        try {
-            await this.groupRepository.findOneOrFail(id);
-            return await this.groupRepository.delete(id);
-        } catch (error) {
-            throw new UserException("group:delete:fail");
         }
     }
 }

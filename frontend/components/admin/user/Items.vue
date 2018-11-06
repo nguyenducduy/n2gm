@@ -164,7 +164,6 @@ import Avatar from 'vue-avatar';
 })
 export default class UserItems extends Vue {
   @Prop() loadingState: boolean;
-  @Prop() defaultSort: any;
   @Action('users/bulk') bulkAction;
   @State(state => state.users.data) users;
 

@@ -41,7 +41,8 @@
   "pages": {
     "breadcrumb": {
       "admin-user": "Users",
-      "admin-dashboard": "Dashboard"
+      "admin-dashboard": "Dashboard",
+      "admin-group": "Groups & Permissions"
     },
     "admin": {
       "user": {
@@ -82,6 +83,25 @@
           "dateLastChangePassword": "Date last change password",
           "addGroup": "Add group",
           "addUser": "Add user"
+        }
+      },
+      "group": {
+        "title": "Groups & Permissions",
+        "form": {
+          "search": "Search",
+          "permissionName": "Name",
+          "permissionDescription": "Description"
+        },
+        "label": {
+          "name": "Name",
+          "managePermission": "Manage permissions",
+          "permissionName": "Name",
+          "permissionDescription": "Description",
+          "permissionDetach": "Detach"
+        },
+        "msg": {
+          "nameIsRequired": "Name is required",
+          "descriptionIsRequired": "Description is required"
         }
       }
     }

@@ -6,7 +6,9 @@ import { Roles } from "../../decorators/roles.decorator";
 import { Permissions } from "../../decorators/permissions.decorator";
 import { UsersService } from "./users.service";
 import { SearchService } from "../search/search.service";
-import { User } from "../../models";
+import { GroupsService } from "../users/groups.service";
+import { PermissionsService } from "../users/permissions.service";
+import { User, Group, Permission } from "../../models";
 import { plainToClass } from "class-transformer";
 import * as bodybuilder from 'bodybuilder';
 import { UserInterceptor } from "../../interceptors/user.interceptor";
@@ -20,6 +22,8 @@ import * as mkdirp from "mkdirp";
 export class UsersResolver {
     constructor(
         private readonly usersService: UsersService,
+        private readonly groupsService: GroupsService,
+        private readonly permissionsService: PermissionsService,
         private readonly searchService: SearchService
     ) {}
 
@@ -42,7 +46,7 @@ export class UsersResolver {
                 isVerified: opts.isVerified
             });
             return {
-                users: plainToClass(User, myUsers.users),
+                users: plainToClass(User, myUsers.items),
                 meta: myUsers.meta
             };
         } catch (error) {
@@ -105,7 +109,7 @@ export class UsersResolver {
     @Mutation("deleteUser")
     @Roles("isSuperUser")
     @Permissions("delete.user")
-    async deleteUser(_: any, { id, input }) {
+    async deleteUser(_: any, { id }) {
         try {
             return await this.usersService.delete(id);
         } catch (error) {
@@ -184,12 +188,32 @@ export class UsersResolver {
         );
     }
 
+    @Query("getGroups")
+    @Roles("isSuperUser")
+    @Permissions("get.groups")
+    async getGroups(_: any, { opts }) {
+        try {
+            const myGroups = await this.groupsService.findAll({
+                curPage: opts.curPage,
+                perPage: opts.perPage,
+                q: opts.q,
+                status: opts.status
+            });
+            return {
+                groups: plainToClass(Group, myGroups.items),
+                meta: myGroups.meta
+            };
+        } catch (error) {
+            throw error;
+        }
+    }
+
     @Mutation("addGroup")
     @Roles("isSuperUser")
     @Permissions("add.group")
     async addGroup(_: any, { input }) {
         try {
-            return await this.usersService.addGroup(input);
+            return await this.groupsService.add(input);
         } catch (error) {
             throw error;
         }
@@ -200,7 +224,51 @@ export class UsersResolver {
     @Permissions("update.group")
     async updateGroup(_: any, { id, input }) {
         try {
-            return await this.usersService.updateGroup(id, input);
+            return await this.groupsService.update(id, input);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @Query("getPermissions")
+    @Roles("isSuperUser")
+    @Permissions("get.permissions")
+    async getPermissions(_: any, { opts }) {
+        try {
+            const myPermissions = await this.permissionsService.findAll({
+                curPage: opts.curPage,
+                perPage: opts.perPage,
+                q: opts.q
+            });
+            return {
+                permissions: plainToClass(Permission, myPermissions.items),
+                meta: myPermissions.meta
+            };
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @Mutation("addPermission")
+    @Roles("isSuperUser")
+    @Permissions("add.permission")
+    async addPermission(_: any, { input }) {
+        try {
+            const myPermission = await this.permissionsService.add(input);
+            this.groupsService.fullLoadAll();
+
+            return await this.permissionsService.findOne(myPermission.id);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @Mutation("deletePermission")
+    @Roles("isSuperUser")
+    @Permissions("delete.permission")
+    async deletePermission(_: any, { id }) {
+        try {
+            return await this.permissionsService.delete(id);
         } catch (error) {
             throw error;
         }

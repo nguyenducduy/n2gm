@@ -3,8 +3,7 @@
     <el-button
       type="text"
       icon="el-icon-plus"
-      @click="visible = true"
-      class="edit-button">
+      @click="visible = true">
       {{ $t('pages.admin.user.label.addUser') }}
     </el-button>
     <el-dialog

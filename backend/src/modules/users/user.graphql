@@ -1,8 +1,15 @@
+type Permission {
+  id: Int!
+  name: String
+  description: String
+}
+
 type Group {
   id: Int!
   name: String
   screenName: String
   style: String
+  permissions: [Permission]
 }
 
 type User {
@@ -31,6 +38,16 @@ type Users {
   meta: PaginationMeta!
 }
 
+type Groups {
+  groups: [Group]
+  meta: PaginationMeta!
+}
+
+type Permissions {
+  permissions: [Permission]
+  meta: PaginationMeta!
+}
+
 type UserSearchResults {
   users: [User]
 }
@@ -46,6 +63,8 @@ type Query {
   getUser(id: Int!): User
   searchUsers(q: String!): UserSearchResults
   getFormsource: Formsource
+  getGroups(opts: JSON!): Groups
+  getPermissions(opts: JSON!): Permissions
 }
 
 type Mutation {
@@ -57,4 +76,6 @@ type Mutation {
   addGroup(input: JSON!): Group
   updateGroup(id: Int!, input: JSON!): Group!
   deleteGroup(id: Int!): Boolean!
+  addPermission(input: JSON!): Permission
+  deletePermission(id: Int!): Boolean!
 }

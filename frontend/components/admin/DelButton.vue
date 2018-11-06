@@ -86,7 +86,7 @@ export default class DelButton extends Vue {
       this.loading = false;
 
       this.deleteSuccess({
-        message: `User ID: ${this.id} deleted`,
+        message: `${this.store} #${this.id} deleted`,
         timeout: 1000
       });
 
@@ -108,7 +108,7 @@ export default class DelButton extends Vue {
   margin-right: 10px;
 
   .el-button--text {
-    color: #f56c6c;
+    color: #f56c6c !important;
   }
 }
 

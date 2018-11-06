@@ -8,7 +8,7 @@ export const state = () => ({
 
 export const mutations = {
   SET_DATA(state, response) {
-    state.data = response.users || null;
+    state.data = response.groups || null;
     state.totalItems = response.meta.totalResults || 0;
     state.recordPerPage = response.meta.perPage || 30;
     state.query.page = response.meta.curPage || 1;
@@ -48,7 +48,11 @@ export const actions = {
               name,
               screenName,
               style,
-              dateCreated
+              permissions {
+                id,
+                name,
+                description
+              }
             },
             meta {
               curPage,
@@ -260,7 +264,7 @@ export const actions = {
     });
 
     return typeof response.errors === "undefined"
-      ? commit("ADD_GROUP", response.data.addGroup)
+      ? commit("ADD_DATA", response.data.addGroup)
       : response.errors;
   }
 };
