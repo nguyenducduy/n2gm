@@ -71,11 +71,11 @@ type Mutation {
   bulkUsers(input: JSON!): [Int]
   addUser(input: JSON!): User!
   updateUser(id: Int!, input: JSON!): User!
-  deleteUser(id: Int!): Boolean!
+  deleteUser(id: Int!): User!
   uploadAvatar(file: Upload): File!
   addGroup(input: JSON!): Group
   updateGroup(id: Int!, input: JSON!): Group!
-  deleteGroup(id: Int!): Boolean!
+  deleteGroup(id: Int!): Group!
   addPermission(input: JSON!): Permission
-  deletePermission(id: Int!): Boolean!
+  deletePermission(id: Int!): Permission!
 }

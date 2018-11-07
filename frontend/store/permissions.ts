@@ -94,7 +94,9 @@ export const actions = {
         ) {
           deletePermission (
             id: $id
-          )
+          ) {
+            name
+          }
         }
       `,
       variables: {
@@ -105,5 +107,9 @@ export const actions = {
     return typeof response.errors === "undefined"
       ? commit("DELETE_DATA", id)
       : response.errors;
+  },
+
+  async assign({ commit }, { id, input }) {
+    console.log(id, input)
   }
 };

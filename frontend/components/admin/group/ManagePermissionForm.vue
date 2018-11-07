@@ -98,3 +98,4 @@ export default class ManagePermissionForm extends Vue {
   }
 }
 </script>
+

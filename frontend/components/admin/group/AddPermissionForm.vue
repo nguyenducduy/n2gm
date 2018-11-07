@@ -44,14 +44,14 @@ import { Action, State } from 'vuex-class';
   notifications: {
     addError: {
       icon: 'fas fa-exclamation-triangle',
-      position: 'bottomLeft',
+      position: 'topCenter',
       title: 'Add',
       toastOnce: true,
       type: 'error'
     },
     addSuccess: {
       icon: 'fas fa-check',
-      position: 'bottomLeft',
+      position: 'topCenter',
       title: 'Add',
       toastOnce: true,
       type: 'success'

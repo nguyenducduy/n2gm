@@ -114,10 +114,11 @@ export class PermissionsService {
 
     async delete(id: number) {
         try {
-            await this.permissionRepository.findOneOrFail(id);
-            return await this.permissionRepository.delete(id);
+            const myPermission = await this.permissionRepository.findOneOrFail(id);
+            return await this.permissionRepository.remove(myPermission);
         } catch (error) {
             throw new UserException("permission:delete:fail");
         }
     }
 }
+

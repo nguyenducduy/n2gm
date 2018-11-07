@@ -20,7 +20,6 @@
           label-position="top"
           size="small"
           :model="form"
-
           ref="addUserForm">
           <el-col :md="24">
             <el-form-item :label="$t('pages.admin.user.form.groupName')">

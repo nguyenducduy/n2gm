@@ -232,8 +232,8 @@ export class UsersService {
 
     async delete(id: number) {
         try {
-            await this.userRepository.findOneOrFail(id);
-            return await this.userRepository.delete(id);
+            const myUser = await this.userRepository.findOneOrFail(id);
+            return await this.userRepository.remove(myUser);
         } catch (error) {
             throw new UserException("user:delete:fail");
         }

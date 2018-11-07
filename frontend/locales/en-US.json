@@ -97,7 +97,9 @@
           "managePermission": "Manage permissions",
           "permissionName": "Name",
           "permissionDescription": "Description",
-          "permissionDetach": "Detach"
+          "permissionDetach": "Detach",
+          "assignPermission": "Assign permission",
+          "assignPermissionTo": "Assign permission to ###groupName###"
         },
         "msg": {
           "nameIsRequired": "Name is required",

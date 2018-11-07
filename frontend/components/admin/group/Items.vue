@@ -53,7 +53,7 @@
       <el-table-column class-name="td-operation" width="100" align="right">
         <template slot-scope="scope">
           <el-button-group class="operation">
-            <el-button icon="el-icon-plus" type="text"></el-button>
+            <assign-permission :groupId="scope.row.id" :groupName="scope.row.name"></assign-permission>
             <!-- <edit-user-form :id="scope.row.id"></edit-user-form> -->
             <del-button :id="scope.row.id" store="users"></del-button>
           </el-button-group>
@@ -67,12 +67,14 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
 import { Action, State } from 'vuex-class';
 // import EditUserForm from '~/components/admin/user/EditUserForm.vue';
+import AssignPermission from '~/components/admin/group/AssignPermission.vue';
 import DelButton from '~/components/admin/DelButton.vue';
 
 @Component({
   components: {
     // EditUserForm,
-    DelButton
+    DelButton,
+    AssignPermission
   },
   notifications: {
     bulkError: {

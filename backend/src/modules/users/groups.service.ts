@@ -155,8 +155,8 @@ export class GroupsService {
 
     async delete(id: number) {
         try {
-            await this.groupRepository.findOneOrFail(id);
-            return await this.groupRepository.delete(id);
+            const myGroup = await this.groupRepository.findOneOrFail(id);
+            return await this.groupRepository.remove(myGroup);
         } catch (error) {
             throw new UserException("group:delete:fail");
         }

@@ -274,7 +274,9 @@ export const actions = {
         ) {
           deleteUser (
             id: $id
-          )
+          ) {
+            fullName
+          }
         }
       `,
       variables: {
