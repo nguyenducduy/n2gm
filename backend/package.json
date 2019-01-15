@@ -48,6 +48,7 @@
     "shortid": "^2.2.8",
     "slug": "^0.9.1",
     "socket.io-redis": "^5.2.0",
+    "tmdbv3": "^0.1.2",
     "ts-node": "^7.0.0",
     "tslib": "1.9.2",
     "typeorm": "^0.2.7",

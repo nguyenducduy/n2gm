@@ -4,5 +4,8 @@
     "users": {
       "directory": "app/storage/files/users"
     }
+  },
+  "tmdb": {
+    "apikey": "a0d81c12a464a7108f993c542632231f"
   }
 }

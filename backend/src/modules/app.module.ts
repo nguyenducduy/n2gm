@@ -10,6 +10,7 @@ import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
 import { SearchModule } from './search/search.module';
 import { EventsModule } from "./events/events.module";
+import { MoviesModule } from "./movies/movies.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { EventsModule } from "./events/events.module";
     UsersModule,
     SearchModule,
     EventsModule,
+    MoviesModule,
     GraphQLModule
   ],
   providers: [

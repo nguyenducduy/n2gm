@@ -2,7 +2,7 @@
   <el-form
     autoComplete="on"
     label-position="top"
-    size="small"
+    size="mini"
     :model="form"
     inline
     @submit.native.prevent

@@ -6,28 +6,26 @@ import {
     JoinTable,
     ManyToMany,
     PrimaryGeneratedColumn,
-    JoinColumn,
-    ManyToOne
+    BaseEntity
 } from 'typeorm';
-import { IsNotEmpty, validateSync } from 'class-validator';
-import { Group, PermissionObject } from ".";
+import { IsNotEmpty, validate } from 'class-validator';
+import { PermissionExisted } from './validators/permission-existed';
+import { ValidateException } from '../shared/filters/validate.exception';
+import { Group } from ".";
 
 @Entity({ name: 'permission' })
-export class Permission {
+export class Permission extends BaseEntity {
     @PrimaryGeneratedColumn({ name: 'pe_id' })
     id: number;
 
     @Column({ name: 'pe_name' })
     @IsNotEmpty()
+    @PermissionExisted({ message: 'Permission already existed.' })
     name: string;
 
     @Column({ name: 'pe_description' })
     @IsNotEmpty()
     description: string;
-
-    // @ManyToOne(type => PermissionObject, { eager: true, nullable: true })
-    // @JoinColumn({ name: 'po_id' })
-    // permissionObject: PermissionObject;
 
     @ManyToMany(type => Group)
     @JoinTable({
@@ -44,20 +42,24 @@ export class Permission {
     groups: Group[];
 
     @BeforeInsert()
-    doBeforeInsertion() {
-      const errors = validateSync(this, { validationError: { target: false } });
+    private async doBeforeInsertion() {
+        const errors = await validate(this, {
+            validationError: { target: false }
+        });
 
-      if (errors.length > 0) {
-        throw errors;
-      }
+        if (errors.length > 0) {
+            throw new ValidateException(errors);
+        }
     }
 
     @BeforeUpdate()
-    doBeforeUpdate() {
-      const errors = validateSync(this, { validationError: { target: false } });
-
-      if (errors.length > 0) {
-        throw errors;
-      }
+    private async doBeforeUpdate() {
+        const errors = await validate(this, {
+            validationError: { target: false },
+            skipMissingProperties: true
+        });
+        if (errors.length > 0) {
+            throw new ValidateException(errors);
+        }
     }
 }

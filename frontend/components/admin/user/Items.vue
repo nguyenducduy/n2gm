@@ -20,13 +20,11 @@
             {{ scope.row.fullName }}
             <nuxt-link :to="`/admin/profile/${scope.row.id}`">@{{ scope.row.screenName }}</nuxt-link>
           </span>
-          <small class="email">{{ scope.row.email }}</small>
+          <small class="email">
+            {{ scope.row.email }} | {{ scope.row.mobileNumber }}
+          </small>
         </template>
       </el-table-column>
-      <el-table-column
-        :label="$t('pages.admin.user.label.mobileNumber')"
-        width="130"
-        align="center"></el-table-column>
       <el-table-column
         :label="$t('pages.admin.user.label.oauthProvider')"
         width="130"

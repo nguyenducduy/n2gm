@@ -23,3 +23,17 @@
 - Stop -> Remove Subsys -> Start
 
 # Bulk action using https://github.com/typeorm/typeorm/blob/master/docs/entity-manager-api.md
+
+
+# Requirement
+- Nodejs
+- MySQL
+- Redis
+- Elasticsearch
+- Socket.io
+
+### TODO
+
+- Admin global search
+- Edit permission.
+- Assign permission to group.

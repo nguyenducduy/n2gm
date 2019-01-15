@@ -45,6 +45,11 @@ export class AuthGuard implements CanActivate {
                 req['user'][roleName]
             ).length > 0 : null;
 
+            // Pass if role is super user
+            if (hasRole === true && req['user']['isSuperUser'] === 1) {
+                return true;
+            }
+
             const hasPermission = permissions ?
                 req['user'] &&
                 req['user'] instanceof User &&

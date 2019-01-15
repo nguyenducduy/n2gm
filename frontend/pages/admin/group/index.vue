@@ -27,10 +27,6 @@
             <el-col :md="10" class="pagination-container">
               <manage-permission-form class="add-btn-form"/>
               <add-group-form class="add-btn-form"/>
-              <pagination
-                :totalItems="totalItems"
-                :currentPage="query.page"
-                :recordPerPage="recordPerPage" />
             </el-col>
           </el-row>
           <el-row class="table-view">
@@ -42,12 +38,6 @@
                   @unsetLoading="unsetLoading"
                   @reload="initData">
                 </group-items>
-              </div>
-              <div class="pagination-bottom">
-                <pagination
-                  :totalItems="totalItems"
-                  :currentPage="query.page"
-                  :recordPerPage="recordPerPage" />
               </div>
             </el-col>
           </el-row>

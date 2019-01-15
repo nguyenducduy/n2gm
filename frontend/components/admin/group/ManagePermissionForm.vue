@@ -31,7 +31,7 @@
             type="text"
             v-model="searchTerm"
             placeholder="Search"
-            size="small" />
+            size="mini" />
           <el-table
             size="mini"
             v-loading.fullscreen.lock="pageLoading"
